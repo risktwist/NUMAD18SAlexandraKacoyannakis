@@ -1,10 +1,12 @@
 package alexandrakacoyannakis.madcourse.neu.edu.numad18s_alexandrakacoyannakis;
 
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,5 +32,15 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this.startActivity(intent);
             }
         });
+
+        //version id
+        final TextView versionIdView = findViewById(R.id.version_id);
+        String versionId = "Version Id: " + BuildConfig.VERSION_CODE;
+        versionIdView.setText(versionId);
+
+        //version name
+        final TextView versionNameView = findViewById(R.id.version_name);
+        String versionName = "Version Name: " + BuildConfig.VERSION_NAME;
+        versionNameView.setText(versionName);
     }
 }

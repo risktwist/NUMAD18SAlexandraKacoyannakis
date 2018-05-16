@@ -9,5 +9,8 @@ public class Error extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_error);
+
+        throw new RuntimeException("program has crashed");
+
     }
 }
