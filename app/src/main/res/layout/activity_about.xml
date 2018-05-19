@@ -9,23 +9,35 @@
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:fontFamily="serif"
         android:text="@string/about_name"
-        android:textColor="@color/green"/>
+        android:textAlignment="center"
+        android:textColor="@color/green"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/year_in_school"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/name"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="serif"
         android:text="@string/year"
-        android:textColor="@color/green"/>
+        android:textAlignment="center"
+        android:textColor="@color/green"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/phone_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/year_in_school"
-        android:textColor="@color/green"/>
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/green"
+        android:fontFamily="serif"
+        android:textAlignment="center"/>
 
     <ImageView
         android:id="@+id/my_photo"
@@ -33,6 +45,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/phone_id"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:adjustViewBounds="true"
+        android:cropToPadding="true"
         android:scaleType="fitCenter"
         android:src="@drawable/headshot" />
 

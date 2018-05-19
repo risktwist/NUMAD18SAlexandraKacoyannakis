@@ -27,5 +27,6 @@ public class About extends AppCompatActivity {
             phoneId = "Accessing the device id is not permitted.";
         }
         phoneIdView.setText("IMEI: "+ phoneId);
+        phoneIdView.setTextSize(18);
     }
 }
