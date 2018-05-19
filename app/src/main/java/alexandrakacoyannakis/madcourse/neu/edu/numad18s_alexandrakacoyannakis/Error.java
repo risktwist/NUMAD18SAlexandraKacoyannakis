@@ -16,6 +16,7 @@ public class Error extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_error);
         ConstraintLayout constraintLayout = findViewById(R.id.error);
+        getSupportActionBar().setTitle(R.string.my_name);
 
         String testLabSetting =
                 Settings.System.getString(getApplicationContext().getContentResolver(), "firebase.test.lab");
