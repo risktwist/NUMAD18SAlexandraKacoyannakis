@@ -21,17 +21,17 @@ public class Error extends AppCompatActivity {
         String testLabSetting =
                 Settings.System.getString(getApplicationContext().getContentResolver(), "firebase.test.lab");
         if (testLabSetting != null && "true".equals(testLabSetting)) {
-            throw new RuntimeException("program has crashed");
-        } else {
             TextView view = new TextView(this);
             view.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT,
                     ConstraintLayout.LayoutParams.MATCH_PARENT));
-            view.setText("Please use this feature in a test mode.");
+            view.setText("This is to bypass issues with the test mode.");
             view.setTextColor(getResources().getColor(R.color.error));
             view.setTextSize(30);
             view.setGravity(Gravity.CENTER);
             view.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             constraintLayout.addView(view);
+        } else {
+            throw new RuntimeException("program has crashed");
         }
 
     }
