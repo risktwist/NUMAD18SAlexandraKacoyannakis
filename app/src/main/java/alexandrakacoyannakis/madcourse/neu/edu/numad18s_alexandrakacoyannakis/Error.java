@@ -17,7 +17,7 @@ public class Error extends AppCompatActivity {
         ConstraintLayout constraintLayout = findViewById(R.id.error);
 
         String testLabSetting =
-                Settings.System.getString(this.getContentResolver(), "firebase.test.lab");
+                Settings.System.getString(getApplicationContext().getContentResolver(), "firebase.test.lab");
         if (testLabSetting != null && "true".equals(testLabSetting)) {
             throw new RuntimeException("program has crashed");
         } else {
