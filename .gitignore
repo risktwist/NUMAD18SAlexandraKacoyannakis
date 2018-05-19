@@ -15,3 +15,5 @@
 /.class
 app/build/*
 app/build/generated/source/r/debug/android/support/*
+.idea/misc.xml
+app/build/intermediates/transforms/instantRunSlicer/debug/9/buildId.txt
