@@ -3,6 +3,9 @@
     package="alexandrakacoyannakis.madcourse.neu.edu.numad18s_alexandrakacoyannakis">
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-sdk
+        android:minSdkVersion="19"
+        android:targetSdkVersion="26" />
 
     <application
         android:allowBackup="true"
