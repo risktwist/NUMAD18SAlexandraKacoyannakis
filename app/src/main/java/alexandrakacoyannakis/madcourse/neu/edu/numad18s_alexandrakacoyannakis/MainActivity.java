@@ -34,6 +34,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //dictionary button
+        final Button dictionaryButton = findViewById(R.id.dictionary);
+        dictionaryButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), Dictionary.class);
+                MainActivity.this.startActivity(intent);
+            }
+        });
+
         //version id
         final TextView versionIdView = findViewById(R.id.version_id);
         String versionId = "Version Id: " + BuildConfig.VERSION_CODE;
