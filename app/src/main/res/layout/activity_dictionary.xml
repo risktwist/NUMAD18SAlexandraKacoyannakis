@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/enter_word"
-        android:hint="@string/enter_word"/>
+        android:hint="@string/enter_word"
+        android:inputType="text"/>
 
     <TextView
         android:layout_width="match_parent"
