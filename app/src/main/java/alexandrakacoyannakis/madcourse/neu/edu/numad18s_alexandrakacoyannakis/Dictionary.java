@@ -1,5 +1,6 @@
 package alexandrakacoyannakis.madcourse.neu.edu.numad18s_alexandrakacoyannakis;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
@@ -86,7 +87,8 @@ public class Dictionary extends AppCompatActivity {
         final Button acknowledgementsButton = findViewById(R.id.acknowledgements_button);
         acknowledgementsButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
+                Intent intent = new Intent(v.getContext(), Acknowledgments.class);
+                Dictionary.this.startActivity(intent);
             }
         });
     }
