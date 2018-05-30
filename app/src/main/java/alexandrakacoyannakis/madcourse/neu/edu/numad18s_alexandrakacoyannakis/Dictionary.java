@@ -56,7 +56,10 @@ public class Dictionary extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                mMediaPlayer.start();
+                //check should only occur when the string is 3 characters or more
+                if (charSequence.length() >= 3) {
+                    mMediaPlayer.start();
+                }
             }
 
             @Override
