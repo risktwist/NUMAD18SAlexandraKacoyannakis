@@ -1,6 +1,5 @@
 package alexandrakacoyannakis.madcourse.neu.edu.numad18s_alexandrakacoyannakis;
 
-import android.content.res.AssetManager;
 import android.media.MediaPlayer;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
@@ -24,7 +23,7 @@ public class Dictionary extends AppCompatActivity {
     private MediaPlayer mMediaPlayer;
     InputStream inputStream = null;
     BufferedReader reader = null;
-    ArrayList<String> matches = new ArrayList<>();
+    ArrayList<String> words = new ArrayList<>(); //words from the text file
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +36,7 @@ public class Dictionary extends AppCompatActivity {
             reader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
             while ((line = reader.readLine()) != null) {
-                matches.add(line);
+                words.add(line);
             }
             reader.close();
             inputStream.close();
@@ -45,6 +44,8 @@ public class Dictionary extends AppCompatActivity {
             Log.e("message: ",e.getMessage());
         }
 
+        //text view
+        final TextView resultsView = findViewById(R.id.entries);
 
         //edit text
         final EditText inputText = findViewById(R.id.enter_word);
@@ -58,7 +59,11 @@ public class Dictionary extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 //check should only occur when the string is 3 characters or more
                 if (charSequence.length() >= 3) {
-                    mMediaPlayer.start();
+                    if (words.contains(charSequence.toString())) {
+                        mMediaPlayer.start();
+                        resultsView.append(charSequence);
+                        resultsView.append("\n");
+                    }
                 }
             }
 
@@ -67,9 +72,6 @@ public class Dictionary extends AppCompatActivity {
 
             }
         });
-
-        //text view
-        final TextView resultsView = findViewById(R.id.entries);
 
         //clear button
         final Button clearButton = findViewById(R.id.clear_button);
