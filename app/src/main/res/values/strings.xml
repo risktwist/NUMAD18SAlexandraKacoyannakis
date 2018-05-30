@@ -4,4 +4,7 @@
     <string name="about_name">Name: Alexandra Kacoyannakis</string>
     <string name="year">Year in School: 2nd year</string>
     <string name="dictionary">Dictionary</string>
+    <string name="enter_word">Enter Word</string>
+    <string name="clear_button">Clear</string>
+    <string name="acknowledgements_button">Acknowledgements</string>
 </resources>
