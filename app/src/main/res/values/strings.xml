@@ -7,4 +7,15 @@
     <string name="enter_word">Enter Word</string>
     <string name="clear_button">Clear</string>
     <string name="acknowledgements_button">Acknowledgements</string>
+    <string name="assignment1">Assignment 1</string>
+    <string name="assignment2">Assignment 2</string>
+    <string name="assignment3">Assignment 3</string>
+    <string name="assignment4">Assignment 4</string>
+    <string name="bullet">\u2022</string>
+    <string name="assign1ack">
+        In order to bypass issues with the Play Store testing, a conditional to skip when testing is on:
+    </string>
+    <string name="assign2ack">
+        Word dictionary list is taken from this source and stored as a txt file:
+    </string>
 </resources>
