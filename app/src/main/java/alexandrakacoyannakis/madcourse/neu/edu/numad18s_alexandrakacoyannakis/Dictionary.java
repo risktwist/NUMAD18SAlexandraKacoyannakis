@@ -60,7 +60,8 @@ public class Dictionary extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 //check should only occur when the string is 3 characters or more
                 if (charSequence.length() >= 3) {
-                    if (words.contains(charSequence.toString())) {
+                    //convert to lower case so that the matching can occur in dictionary
+                    if (words.contains(charSequence.toString().toLowerCase())) {
                         mMediaPlayer.start();
                         resultsView.append(charSequence);
                         resultsView.append("\n");
