@@ -6,7 +6,7 @@ android {
         applicationId "alexandrakacoyannakis.madcourse.neu.edu.numad18s_alexandrakacoyannakis"
         minSdkVersion 14
         targetSdkVersion 26
-        versionCode 3
+        versionCode 4
         versionName "2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
