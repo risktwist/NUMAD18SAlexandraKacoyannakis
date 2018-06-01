@@ -4,7 +4,7 @@ android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "alexandrakacoyannakis.madcourse.neu.edu.numad18s_alexandrakacoyannakis"
-        minSdkVersion 11
+        minSdkVersion 14
         targetSdkVersion 26
         versionCode 3
         versionName "2.0"
