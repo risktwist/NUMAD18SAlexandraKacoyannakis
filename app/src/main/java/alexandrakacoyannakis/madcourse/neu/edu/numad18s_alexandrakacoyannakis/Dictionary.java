@@ -75,9 +75,8 @@ public class Dictionary extends AppCompatActivity {
                     Log.i("onTextChanged", "text is greater than 3 characters");
                     if (words.contains(charSequence.toString().toLowerCase())) {
                         beep.startTone(ToneGenerator.TONE_CDMA_PIP,150);
-                        Log.i("onTextChanged", "match found" + charSequence.toString());
-                        resultsView.append(charSequence);
-                        resultsView.append("\n");
+                        Log.i("onTextChanged", "match found " + charSequence.toString());
+                        resultsView.append(charSequence +"\n");
                     }
                 }
             }
