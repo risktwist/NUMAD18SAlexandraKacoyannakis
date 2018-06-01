@@ -18,4 +18,7 @@
     <string name="assign2ack">
         Word dictionary list is taken from this source and stored as a txt file:
     </string>
+    <string name="assign2tone">
+        Media player did not seem to create properly on lower APIs. The ToneGenerator class helped to provide the beep.
+    </string>
 </resources>

@@ -34,5 +34,13 @@ public class Acknowledgments extends AppCompatActivity {
                 Html.fromHtml("<a href=\"http://wordlist.sourceforge.net/\"> http://wordlist.sourceforge.net/</a>"));
         viewSource2.setMovementMethod(LinkMovementMethod.getInstance());
 
+        final TextView view2a = findViewById(R.id.assign2ack_second);
+        view2a.setText(bullet + getString(R.string.assign2tone));
+
+        final TextView viewSource2a = findViewById(R.id.assign2_source_second);
+        viewSource2a.setText(Html.fromHtml("<a href=\"https://stackoverflow.com/questions/29509010/how-to-play-a-short-beep-to-android-phones-loudspeaker-programmatically\">" +
+                "https://stackoverflow.com/questions/29509010/how-to-play-a-short-beep-to-android-phones-loudspeaker-programmatically</a>"));
+        viewSource2a.setMovementMethod(LinkMovementMethod.getInstance());
+
     }
 }
