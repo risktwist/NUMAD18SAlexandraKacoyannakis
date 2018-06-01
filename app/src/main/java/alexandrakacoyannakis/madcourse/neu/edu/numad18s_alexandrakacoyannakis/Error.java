@@ -28,7 +28,6 @@ public class Error extends AppCompatActivity {
             view.setTextColor(getResources().getColor(R.color.error));
             view.setTextSize(30);
             view.setGravity(Gravity.CENTER);
-            view.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             constraintLayout.addView(view);
         } else {
             throw new RuntimeException("program has crashed");
