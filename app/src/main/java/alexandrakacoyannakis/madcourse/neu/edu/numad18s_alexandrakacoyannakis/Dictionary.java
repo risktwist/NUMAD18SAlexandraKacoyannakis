@@ -2,14 +2,7 @@ package alexandrakacoyannakis.madcourse.neu.edu.numad18s_alexandrakacoyannakis;
 
 import android.content.Intent;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.media.SoundPool;
 import android.media.ToneGenerator;
-import android.net.Uri;
-import android.net.rtp.AudioStream;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -30,19 +23,16 @@ public class Dictionary extends AppCompatActivity {
 
     InputStream inputStream = null;
     BufferedReader reader = null;
-    ArrayList<String> words = new ArrayList<>(); //words from the text file
-    Ringtone r;
+    ArrayList<String> words = new ArrayList<>();; //words from the text file
+    ToneGenerator beep;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dictionary);
-        final ToneGenerator beep = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
+        beep = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
 
         try {
-            Log.i("mediaPlayer", "media player has been created");
-
-
             inputStream = getAssets().open("wordlist.txt");
             reader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
@@ -68,15 +58,16 @@ public class Dictionary extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                Log.i("onTextChanged", "entering onTextChanged");
+                StringBuilder builder = new StringBuilder(charSequence);
+
                 //check should only occur when the string is 3 characters or more
-                if (charSequence.length() >= 3) {
+                if (builder.length() >= 3) {
                     //convert to lower case so that the matching can occur in dictionary
                     Log.i("onTextChanged", "text is greater than 3 characters");
-                    if (words.contains(charSequence.toString().toLowerCase())) {
+                    if (words.contains(builder.toString().toLowerCase())) {
                         beep.startTone(ToneGenerator.TONE_CDMA_PIP,150);
-                        Log.i("onTextChanged", "match found " + charSequence.toString());
-                        resultsView.append(charSequence +"\n");
+                        Log.i("onTextChanged", "match found " + builder);
+                        resultsView.append(builder.append("\n"));
                     }
                 }
             }
@@ -104,5 +95,11 @@ public class Dictionary extends AppCompatActivity {
                 Dictionary.this.startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onDestroy()  {
+        super.onDestroy();
+        beep.release();
     }
 }
