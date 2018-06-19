@@ -43,6 +43,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //word game button
+        final Button wordGameButton = findViewById(R.id.word_game);
+        wordGameButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), WordGame.class);
+                MainActivity.this.startActivity(intent);
+            }
+        });
+
         //version id
         final TextView versionIdView = findViewById(R.id.version_id);
         String versionId = "Version Id: " + BuildConfig.VERSION_CODE;
