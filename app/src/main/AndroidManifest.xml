@@ -29,7 +29,8 @@
         <activity
             android:name=".Dictionary"
             android:label="Test Dictionary" />
-        <activity android:name=".Acknowledgments"></activity>
+        <activity android:name=".Acknowledgments" />
+        <activity android:name=".WordGame"></activity>
     </application>
 
 </manifest>
