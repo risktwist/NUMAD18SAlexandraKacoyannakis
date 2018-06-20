@@ -22,4 +22,7 @@
         Media player did not seem to create properly on lower APIs. The ToneGenerator class helped to provide the beep.
     </string>
     <string name="word_game">Word Game</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
