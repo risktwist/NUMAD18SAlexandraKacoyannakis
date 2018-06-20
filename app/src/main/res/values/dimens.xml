@@ -11,4 +11,8 @@
     <dimen name="tile_size">30dp</dimen>
     <dimen name="tile_margin">0dp</dimen>
     <dimen name="tile_padding">3dp</dimen>
+    <dimen name="control_padding">20dp</dimen>
+    <dimen name="small_board_padding">2dp</dimen>
+    <dimen name="small_board_margin">2dp</dimen>
+    <dimen name="elevation_low">4dp</dimen>
 </resources>
