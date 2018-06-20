@@ -30,7 +30,8 @@
             android:name=".Dictionary"
             android:label="Test Dictionary" />
         <activity android:name=".Acknowledgments" />
-        <activity android:name=".WordGame"></activity>
+        <activity android:name=".WordGame" />
+        <activity android:name=".GameActivity"></activity>
     </application>
 
 </manifest>
