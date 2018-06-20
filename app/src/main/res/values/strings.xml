@@ -23,6 +23,14 @@
     </string>
     <string name="word_game">Word Game</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="long_app_name">Scroggle</string>
+    <string name="action_settings">Settings</string>
+    <string name="ok_label">OK</string>
+    <string name="about_title">About Scroggle</string>
+    <string name="about_text"/>
+
+    <!--Fragment strings -->
+    <string name="continue_label">Continue</string>
+    <string name="about_label">About</string>
+    <string name="new_game_label">New Game</string>
 </resources>
