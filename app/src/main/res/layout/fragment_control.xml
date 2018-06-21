@@ -21,4 +21,9 @@
         android:elevation="@dimen/elevation_low"
         android:drawableTop="@drawable/home"
         android:text="@string/main_menu_label"/>
+
+    <TextView
+        android:id="@+id/timer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>
