@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -51,6 +50,25 @@ public class GameActivity extends Activity {
         dialog.show();
 
         // Reset the board to the initial position
+        mGameFragment.initGame();
+    }
+
+
+    //used for when the timer runs out
+    public void stopGame() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(R.string.timer_finished));
+        builder.setCancelable(false);
+        builder.setPositiveButton(R.string.ok_label,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                });
+        final Dialog dialog = builder.create();
+        dialog.show();
+
         mGameFragment.initGame();
     }
 

@@ -47,6 +47,7 @@ public class ControlFragment extends Fragment {
 
             public void onFinish() {
                 timerView.setText("Time's Up!");
+                ((GameActivity) getActivity()).stopGame();
             }
         }.start();
 
