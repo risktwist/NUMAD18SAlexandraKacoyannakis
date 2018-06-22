@@ -23,7 +23,7 @@ public class Dictionary extends AppCompatActivity {
 
     InputStream inputStream = null;
     BufferedReader reader = null;
-    ArrayList<String> words = new ArrayList<>();; //words from the text file
+    ArrayList<String> words = new ArrayList<>(); //words from the text file
     ToneGenerator beep;
 
     @Override
