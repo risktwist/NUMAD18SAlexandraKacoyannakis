@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="@dimen/control_padding"
+    android:id="@+id/fragment_control"
     tools:context=".GameActivity">
     <Button
         android:id="@+id/button_restart"

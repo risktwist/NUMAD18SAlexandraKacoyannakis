@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ControlFragment extends Fragment {
 
+    CountDownTimer timer;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -35,7 +36,7 @@ public class ControlFragment extends Fragment {
 
         //create timer with phase 1 of 1.5 minutes
         final TextView timerView = rootView.findViewById(R.id.timer);
-        new CountDownTimer(90000, 1000) {
+        timer = new CountDownTimer(90000, 1000) {
             public void onTick(long timeToFinished) {
                 timerView.setText(""+String.format("%02d:%02d:%02d",
                         TimeUnit.MILLISECONDS.toHours(timeToFinished),
@@ -53,5 +54,9 @@ public class ControlFragment extends Fragment {
 
 
         return rootView;
+    }
+
+    public void resetTimer() {
+        timer.cancel();
     }
 }

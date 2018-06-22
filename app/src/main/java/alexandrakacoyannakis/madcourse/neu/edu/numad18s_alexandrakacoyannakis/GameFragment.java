@@ -42,6 +42,7 @@ public class GameFragment extends Fragment {
     private int mLastLarge;
     private int mLastSmall;
     private ArrayList<String> words = new ArrayList<>();
+    private ArrayList<String> userWords = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -158,6 +159,7 @@ public class GameFragment extends Fragment {
         initGame();
         initViews(getView(), words);
         updateAllTiles();
+
     }
 
     public void initGame() {
@@ -305,7 +307,7 @@ public class GameFragment extends Fragment {
     //calculate the score using the scrabble scores.
     //add a bonus 5 points for any words with all 9 letters
     //subtract 2 points for any incorrect words
-    private int calculateScore(ArrayList<String> userWords) {
+    public int calculateScore() {
         int score = 0;
         for (int i=0; i  < userWords.size(); i++) {
             String word = userWords.get(i);

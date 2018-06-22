@@ -12,6 +12,7 @@ public class GameActivity extends Activity {
     public static final String KEY_RESTORE = "key_restore";
     public static final String PREF_RESTORE = "pref_restore";
     private GameFragment mGameFragment;
+    private ControlFragment controlFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +21,7 @@ public class GameActivity extends Activity {
         // Restore game here...
         mGameFragment = (GameFragment) getFragmentManager()
                 .findFragmentById(R.id.fragment_game);
+        controlFragment = (ControlFragment) getFragmentManager().findFragmentById(R.id.fragment_control);
         boolean restore = getIntent().getBooleanExtra(KEY_RESTORE, false);
         if (restore) {
             String gameData = getPreferences(MODE_PRIVATE)
@@ -33,6 +35,8 @@ public class GameActivity extends Activity {
 
     public void restartGame() {
         mGameFragment.restartGame();
+        //getFragmentManager().beginTransaction().detach(controlFragment).attach(controlFragment).commit();
+
     }
 
     public void reportWinner(final Tile.Owner winner) {
@@ -56,8 +60,9 @@ public class GameActivity extends Activity {
 
     //used for when the timer runs out
     public void stopGame() {
+        int score = mGameFragment.calculateScore();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(getString(R.string.timer_finished));
+        builder.setMessage(getString(R.string.timer_finished) + " " + score);
         builder.setCancelable(false);
         builder.setPositiveButton(R.string.ok_label,
                 new DialogInterface.OnClickListener() {
