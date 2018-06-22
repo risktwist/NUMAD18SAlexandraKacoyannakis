@@ -104,7 +104,7 @@ public class GameFragment extends Fragment {
                     public void onClick(View view) {
                         if (isAvailable(smallTile)) {
                             makeMove(fLarge, fSmall);
-                            switchTurns();
+                            //switchTurns();
                         }
                     }
                 });
