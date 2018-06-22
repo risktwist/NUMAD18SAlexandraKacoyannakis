@@ -254,7 +254,6 @@ public class GameFragment extends Fragment {
             } catch (IOException e) {
                 Log.e("message: ",e.getMessage());
             }
-            Log.d("words_length", "Number of words with 9 characters " + words.size());
             return words;
         }
     }
