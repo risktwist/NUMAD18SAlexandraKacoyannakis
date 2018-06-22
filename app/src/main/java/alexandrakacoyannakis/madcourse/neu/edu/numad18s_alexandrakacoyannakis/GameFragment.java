@@ -17,6 +17,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 
 public class GameFragment extends Fragment {
     // Data structures go here...
@@ -63,7 +64,16 @@ public class GameFragment extends Fragment {
 
         //find 9 letter words
         LoadWordTask loadWords = new LoadWordTask();
-        loadWords.execute();
+        ArrayList<String> words = new ArrayList<>();
+        try{
+            words = loadWords.execute().get();
+        } catch (InterruptedException e) {
+            Log.e("error", e.getMessage());
+        } catch (ExecutionException e) {
+            Log.e("'error", e.getMessage());
+        }
+        Log.v("word_result", "word size from results is " + words.size());
+
         initViews(rootView);
         updateAllTiles();
         return rootView;
