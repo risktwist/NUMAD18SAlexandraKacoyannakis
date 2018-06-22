@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -274,5 +275,89 @@ public class GameFragment extends Fragment {
 
     private char randomLetter(String word) {
         return word.charAt(new Random().nextInt(word.length()));
+    }
+
+
+    //calculate the score using the scrabble scores.
+    //add a bonus 5 points for any words with all 9 letters
+    //subtract 2 points for any incorrect words
+    private int calculateScore(ArrayList<String> userWords) {
+        int score = 0;
+        for (int i=0; i  < userWords.size(); i++) {
+            String word = userWords.get(i);
+            if (word.length() == 9) {
+                score += 5;
+            }
+
+            for (int j = 0; j < word.length(); j++) {
+                char letter = word.charAt(j);
+                if (isOnePointLetter(letter)){
+                    score += 1;
+                } else if (isTwoPointLetter(letter)) {
+                    score += 2;
+                } else if (isThreePointLetter(letter)) {
+                    score += 3;
+                } else if (isFourPointLetter(letter)) {
+                    score +=4;
+                } else if (isFivePointLetter(letter)) {
+                    score += 5;
+                } else if (isEightPointLetter(letter)) {
+                    score += 8;
+                } else if (isTenPointLetter(letter)) {
+                    score += 10;
+                }
+            }
+        }
+        return score;
+    }
+
+    private boolean isOnePointLetter(char letter) {
+        if (letter == 'e' || letter == 'a' || letter == 'i' || letter == 'o' || letter == 'n'
+                || letter == 'r' || letter == 't' || letter == 'l' || letter =='s' || letter == 'u') {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isTwoPointLetter(char letter) {
+        if (letter == 'd' || letter == 'g') {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isThreePointLetter(char letter) {
+        if (letter == 'b' || letter == 'c' || letter == 'm' || letter == 'p') {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isFourPointLetter(char letter) {
+        if (letter == 'f' || letter == 'h' || letter == 'v' || letter == 'w' || letter == 'y') {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isFivePointLetter(char letter) {
+        if (letter == 'k') {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isEightPointLetter(char letter) {
+        if (letter == 'j' || letter == 'x') {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isTenPointLetter(char letter) {
+        if (letter == 'q' || letter == 'z') {
+            return true;
+        }
+        return false;
     }
 }
