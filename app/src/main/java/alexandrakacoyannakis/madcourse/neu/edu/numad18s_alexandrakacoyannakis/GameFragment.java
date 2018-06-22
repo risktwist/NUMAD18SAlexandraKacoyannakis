@@ -108,10 +108,10 @@ public class GameFragment extends Fragment {
                 inner.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (isAvailable(smallTile)) {
+                       // if (isAvailable(smallTile)) {
                             makeMove(fLarge, fSmall);
-                            switchTurns();
-                        }
+                           // switchTurns();
+                       // }
                     }
                 });
             }
@@ -124,12 +124,16 @@ public class GameFragment extends Fragment {
     }
 
     private void makeMove(int large, int small) {
+        Log.d("make_move", "getting to make move");
         mLastLarge = large;
         mLastSmall = small;
         Tile smallTile = mSmallTiles[large][small];
         Tile largeTile = mLargeTiles[large];
         smallTile.setOwner(mPlayer);
-        setAvailableFromLastMove(small);
+        smallTile.selectLetterTile();
+
+
+        //setAvailableFromLastMove(small);
         /*Tile.Owner oldWinner = largeTile.getOwner();
         Tile.Owner winner = largeTile.findWinner();
         if (winner != oldWinner) {
@@ -163,9 +167,9 @@ public class GameFragment extends Fragment {
         mEntireBoard.setSubTiles(mLargeTiles);
 
         // If the player moves first, set which spots are available
-        mLastSmall = -1;
+        /*mLastSmall = -1;
         mLastLarge = -1;
-        setAvailableFromLastMove(mLastSmall);
+        setAvailableFromLastMove(mLastSmall);*/
     }
 
     private void setAvailableFromLastMove(int small) {

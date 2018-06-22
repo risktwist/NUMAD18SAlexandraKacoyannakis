@@ -1,6 +1,7 @@
 package alexandrakacoyannakis.madcourse.neu.edu.numad18s_alexandrakacoyannakis;
 
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -53,12 +54,19 @@ public class Tile {
     public void updateDrawableState() {
         if (mView == null) return;
         int level = getLevel();
+        Log.d("level", level+"");
         if (mView.getBackground() != null) {
             mView.getBackground().setLevel(level);
         }
         if (mView instanceof ImageButton) {
             Drawable drawable = ((ImageButton) mView).getDrawable();
             drawable.setLevel(level);
+        }
+    }
+
+    public void selectLetterTile() {
+        if (mView instanceof ImageButton) {
+            mView.setBackgroundResource(R.color.green);
         }
     }
 
