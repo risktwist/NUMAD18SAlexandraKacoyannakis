@@ -16,6 +16,7 @@ import java.io.InputStreamReader;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
@@ -35,6 +36,7 @@ public class GameFragment extends Fragment {
     private Set<Tile> mAvailable = new HashSet<Tile>();
     private int mLastLarge;
     private int mLastSmall;
+    private ArrayList<String> words = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,7 +66,7 @@ public class GameFragment extends Fragment {
 
         //find 9 letter words
         LoadWordTask loadWords = new LoadWordTask();
-        ArrayList<String> words = new ArrayList<>();
+
         try{
             words = loadWords.execute().get();
         } catch (InterruptedException e) {
@@ -74,19 +76,21 @@ public class GameFragment extends Fragment {
         }
         Log.v("word_result", "word size from results is " + words.size());
 
-        initViews(rootView);
+        initViews(rootView, words);
         updateAllTiles();
         return rootView;
     }
 
-    private void initViews(View rootView) {
+    private void initViews(View rootView, ArrayList<String> wordsForBoard) {
         mEntireBoard.setView(rootView);
         for (int large = 0; large < 9; large++) {
             View outer = rootView.findViewById(mLargeIds[large]);
             mLargeTiles[large].setView(outer);
-            //find a 9 letter word from that file
+
             //in the inner loop, populate the letters randomly
             //find the words using a service?
+            String boardWord = randomNineLetterWord(wordsForBoard);
+            Log.d("board_word", "Next word is " + boardWord);
 
             for (int small = 0; small < 9; small++) {
                 ImageButton inner = (ImageButton) outer.findViewById
@@ -135,7 +139,7 @@ public class GameFragment extends Fragment {
 
     public void restartGame() {
         initGame();
-        initViews(getView());
+        initViews(getView(), words);
         updateAllTiles();
     }
 
@@ -253,5 +257,13 @@ public class GameFragment extends Fragment {
             Log.d("words_length", "Number of words with 9 characters " + words.size());
             return words;
         }
+    }
+
+    private String randomNineLetterWord(ArrayList<String> smallBoardWords) {
+        return smallBoardWords.get(new Random().nextInt(smallBoardWords.size()));
+    }
+
+    private String randomLetter(String word) {
+        return word.charAt(new Random().nextInt(word.length())) + "";
     }
 }
