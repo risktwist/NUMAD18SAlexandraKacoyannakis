@@ -110,7 +110,7 @@ public class GameFragment extends Fragment {
                     public void onClick(View view) {
                         if (isAvailable(smallTile)) {
                             makeMove(fLarge, fSmall);
-                            //switchTurns();
+                            switchTurns();
                         }
                     }
                 });
@@ -130,7 +130,7 @@ public class GameFragment extends Fragment {
         Tile largeTile = mLargeTiles[large];
         smallTile.setOwner(mPlayer);
         setAvailableFromLastMove(small);
-        Tile.Owner oldWinner = largeTile.getOwner();
+        /*Tile.Owner oldWinner = largeTile.getOwner();
         Tile.Owner winner = largeTile.findWinner();
         if (winner != oldWinner) {
             largeTile.setOwner(winner);
@@ -140,7 +140,7 @@ public class GameFragment extends Fragment {
         updateAllTiles();
         if (winner != Tile.Owner.NEITHER) {
             ((GameActivity)getActivity()).reportWinner(winner);
-        }
+        }*/
     }
 
     public void restartGame() {
