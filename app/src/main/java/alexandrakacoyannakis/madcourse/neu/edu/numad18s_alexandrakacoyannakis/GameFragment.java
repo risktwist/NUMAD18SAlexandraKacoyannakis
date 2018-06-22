@@ -100,6 +100,7 @@ public class GameFragment extends Fragment {
 
                 ImageButton inner = (ImageButton) outer.findViewById
                         (mSmallIds[small]);
+                inner.setImageResource(getResources().getIdentifier(Character.toString(letter), "drawable", "alexandrakacoyannakis.madcourse.neu.edu.numad18s_alexandrakacoyannakis"));
                 final int fLarge = large;
                 final int fSmall = small;
                 final Tile smallTile = mSmallTiles[large][small];
