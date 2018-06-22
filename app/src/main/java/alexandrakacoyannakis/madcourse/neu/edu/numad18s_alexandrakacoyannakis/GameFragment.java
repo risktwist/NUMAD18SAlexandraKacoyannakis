@@ -60,9 +60,7 @@ public class GameFragment extends Fragment {
         mAvailable.add(tile);
     }
 
-    public boolean isAvailable(Tile tile, int smallTile) {
-
-        Log.d("subtiles", smallTile+"'");
+    public boolean isAvailable(Tile tile) {
         return mAvailable.contains(tile);
     }
 
@@ -116,7 +114,11 @@ public class GameFragment extends Fragment {
                 inner.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (isAvailable(smallTile, fSmall)) {
+                        if (isNewLargeBoard(fLarge, mLastLarge)) {
+                            makeMove(fLarge, fSmall);
+                        }
+
+                        if (isAvailable(smallTile)) {
                             makeMove(fLarge, fSmall);
                         }
                            // switchTurns();
@@ -385,5 +387,18 @@ public class GameFragment extends Fragment {
             return true;
         }
         return false;
+    }
+
+    /**
+     * if user enters next large board, reset
+     * @param nextLarge
+     * @param currentLarge
+     * @return
+     */
+    private boolean isNewLargeBoard(int nextLarge, int currentLarge) {
+        if (nextLarge == currentLarge) {
+            return false;
+        }
+        return true;
     }
 }
