@@ -87,12 +87,17 @@ public class GameFragment extends Fragment {
             View outer = rootView.findViewById(mLargeIds[large]);
             mLargeTiles[large].setView(outer);
 
-            //in the inner loop, populate the letters randomly
-            //find the words using a service?
+            //find random 9 letter word for each small board
             String boardWord = randomNineLetterWord(wordsForBoard);
             Log.d("board_word", "Next word is " + boardWord);
 
             for (int small = 0; small < 9; small++) {
+                char letter = randomLetter(boardWord);
+
+                //remove letter so it is not chosen again
+                boardWord = boardWord.replaceFirst(Character.toString(letter), "");
+                Log.d("random_letter", "Random letter is " + letter);
+
                 ImageButton inner = (ImageButton) outer.findViewById
                         (mSmallIds[small]);
                 final int fLarge = large;
@@ -262,7 +267,7 @@ public class GameFragment extends Fragment {
         return smallBoardWords.get(new Random().nextInt(smallBoardWords.size()));
     }
 
-    private String randomLetter(String word) {
-        return word.charAt(new Random().nextInt(word.length())) + "";
+    private char randomLetter(String word) {
+        return word.charAt(new Random().nextInt(word.length()));
     }
 }
