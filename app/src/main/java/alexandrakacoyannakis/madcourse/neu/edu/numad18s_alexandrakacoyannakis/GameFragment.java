@@ -1,6 +1,7 @@
 package alexandrakacoyannakis.madcourse.neu.edu.numad18s_alexandrakacoyannakis;
 
 import android.app.Fragment;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,6 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -53,6 +60,10 @@ public class GameFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView =
                 inflater.inflate(R.layout.large_board, container, false);
+
+        //find 9 letter words
+        LoadWordTask loadWords = new LoadWordTask();
+        loadWords.execute();
         initViews(rootView);
         updateAllTiles();
         return rootView;
@@ -63,6 +74,9 @@ public class GameFragment extends Fragment {
         for (int large = 0; large < 9; large++) {
             View outer = rootView.findViewById(mLargeIds[large]);
             mLargeTiles[large].setView(outer);
+            //find a 9 letter word from that file
+            //in the inner loop, populate the letters randomly
+            //find the words using a service?
 
             for (int small = 0; small < 9; small++) {
                 ImageButton inner = (ImageButton) outer.findViewById
@@ -200,5 +214,34 @@ public class GameFragment extends Fragment {
         }
         setAvailableFromLastMove(mLastSmall);
         updateAllTiles();
+    }
+
+    private class LoadWordTask extends AsyncTask<Void, Integer, ArrayList<String>> {
+
+        InputStream inputStream = null;
+        BufferedReader reader = null;
+        ArrayList<String> words = new ArrayList<>(); //words from the text file
+
+        @Override
+        protected ArrayList<String> doInBackground(Void...params) {
+            try {
+                inputStream = getActivity().getAssets().open("wordlist.txt");
+                reader = new BufferedReader(new InputStreamReader(inputStream));
+                String line;
+
+                //only add 9 character words for block
+                while ((line = reader.readLine()) != null) {
+                    if (line.length() == 9) {
+                        words.add(line);
+                    }
+                }
+                reader.close();
+                inputStream.close();
+            } catch (IOException e) {
+                Log.e("message: ",e.getMessage());
+            }
+            Log.d("words_length", "Number of words with 9 characters " + words.size());
+            return words;
+        }
     }
 }
