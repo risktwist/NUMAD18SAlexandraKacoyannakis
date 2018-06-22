@@ -1,6 +1,9 @@
 package alexandrakacoyannakis.madcourse.neu.edu.numad18s_alexandrakacoyannakis;
 
 import android.app.Fragment;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,6 +37,7 @@ public class GameFragment extends Fragment {
     private Tile mLargeTiles[] = new Tile[9];
     private Tile mSmallTiles[][] = new Tile[9][9];
     private Tile.Owner mPlayer = Tile.Owner.X;
+    private Tile currentTile = new Tile(this);
     private Set<Tile> mAvailable = new HashSet<Tile>();
     private int mLastLarge;
     private int mLastSmall;
@@ -55,7 +59,9 @@ public class GameFragment extends Fragment {
         mAvailable.add(tile);
     }
 
-    public boolean isAvailable(Tile tile) {
+    public boolean isAvailable(Tile tile, int smallTile) {
+
+        Log.d("subtiles", smallTile+"'");
         return mAvailable.contains(tile);
     }
 
@@ -109,10 +115,10 @@ public class GameFragment extends Fragment {
                 inner.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                       // if (isAvailable(smallTile)) {
+                        if (isAvailable(smallTile, fSmall)) {
                             makeMove(fLarge, fSmall);
+                        }
                            // switchTurns();
-                       // }
                     }
                 });
             }
@@ -132,9 +138,9 @@ public class GameFragment extends Fragment {
         Tile largeTile = mLargeTiles[large];
         smallTile.setOwner(mPlayer);
         smallTile.selectLetterTile();
+        currentTile = smallTile;
 
-
-        //setAvailableFromLastMove(small);
+        setAvailableFromLastMove(small);
         /*Tile.Owner oldWinner = largeTile.getOwner();
         Tile.Owner winner = largeTile.findWinner();
         if (winner != oldWinner) {
@@ -168,9 +174,8 @@ public class GameFragment extends Fragment {
         mEntireBoard.setSubTiles(mLargeTiles);
 
         // If the player moves first, set which spots are available
-        /*mLastSmall = -1;
-        mLastLarge = -1;
-        setAvailableFromLastMove(mLastSmall);*/
+        Log.d("what_is_initial", Integer.toString(mLastSmall));
+        setAvailableFromLastMove(-1);
     }
 
     private void setAvailableFromLastMove(int small) {
@@ -179,17 +184,36 @@ public class GameFragment extends Fragment {
         if (small != -1) {
             for (int dest = 0; dest < 9; dest++) {
                 Tile tile = mSmallTiles[small][dest];
-                if (tile.getOwner() == Tile.Owner.NEITHER)
+                Log.d("smallTile_selected" , currentTile.getIsSelected()+"");
+                if (mLastSmall == 0 && !currentTile.getIsSelected() && (dest == 1 || dest == 3 || dest == 4)) {
                     addAvailable(tile);
+                } else if (mLastSmall == 1 && !currentTile.getIsSelected() && (dest == 0 || dest == 2 || dest == 3 || dest == 4 || dest == 5)) {
+                    addAvailable(tile);
+                } else if (mLastSmall == 2 && !currentTile.getIsSelected() && (dest == 1 || dest == 4 || dest == 5)) {
+                    addAvailable(tile);
+                } else if (mLastSmall == 3 && !currentTile.getIsSelected() && (dest == 0 || dest == 1 || dest == 4 || dest == 6 || dest == 7 )) {
+                    addAvailable(tile);
+                } else if (mLastSmall == 4 && !currentTile.getIsSelected()) { //from this tile could move anywhere since it's center
+                    addAvailable(tile);
+                } else if (mLastSmall == 5 && !currentTile.getIsSelected() && (dest == 1 || dest == 2 || dest == 4 || dest == 7 || dest == 8)) {
+                    addAvailable(tile);
+                } else if (mLastSmall == 6 && !currentTile.getIsSelected() && (dest == 3 || dest == 4 || dest == 7)) {
+                    addAvailable(tile);
+                } else if (mLastSmall == 7 && !currentTile.getIsSelected() && (dest == 3 || dest == 4 || dest == 5 || dest == 6 || dest == 8)) {
+                    addAvailable(tile);
+                } else if (mLastSmall == 8 && !currentTile.getIsSelected() && (dest == 4 || dest == 5 || dest == 7)) {
+                    addAvailable(tile);
+                }
             }
         }
         // If there were none available, make all squares available
-        if (mAvailable.isEmpty()) {
+         else if (mAvailable.isEmpty()) {
             setAllAvailable();
         }
     }
 
     private void setAllAvailable() {
+        Log.d("setallavailable", "getting to set all available");
         for (int large = 0; large < 9; large++) {
             for (int small = 0; small < 9; small++) {
                 Tile tile = mSmallTiles[large][small];

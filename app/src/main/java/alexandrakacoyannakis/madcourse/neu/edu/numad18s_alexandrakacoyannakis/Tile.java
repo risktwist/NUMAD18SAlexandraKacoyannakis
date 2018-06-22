@@ -11,17 +11,11 @@ public class Tile {
         X, O /* letter O */, NEITHER, BOTH
     }
 
-    // These levels are defined in the drawable definitions
-    private static final int LEVEL_X = 0;
-    private static final int LEVEL_O = 1; // letter O
-    private static final int LEVEL_BLANK = 2;
-    private static final int LEVEL_AVAILABLE = 3;
-    private static final int LEVEL_TIE = 3;
-
     private final GameFragment mGame;
     private Owner mOwner = Owner.NEITHER;
     private View mView;
     private Tile mSubTiles[];
+    private boolean isSelected = false;
 
     public Tile(GameFragment game) {
         this.mGame = game;
@@ -51,42 +45,22 @@ public class Tile {
         this.mSubTiles = subTiles;
     }
 
+    public boolean getIsSelected() {return isSelected;}
+
+    public void setIsSelected(boolean isSelected) {this.isSelected = isSelected;}
+
     public void updateDrawableState() {
         if (mView == null) return;
-        int level = getLevel();
-        Log.d("level", level+"");
-        if (mView.getBackground() != null) {
-            mView.getBackground().setLevel(level);
-        }
         if (mView instanceof ImageButton) {
-            Drawable drawable = ((ImageButton) mView).getDrawable();
-            drawable.setLevel(level);
+            mView.setBackgroundResource(R.color.available_color);
         }
     }
 
     public void selectLetterTile() {
         if (mView instanceof ImageButton) {
             mView.setBackgroundResource(R.color.green);
+            isSelected = true;
         }
-    }
-
-    private int getLevel() {
-        int level = LEVEL_BLANK;
-        switch (mOwner) {
-            case X:
-                level = LEVEL_X;
-                break;
-            case O: // letter O
-                level = LEVEL_O;
-                break;
-            case BOTH:
-                level = LEVEL_TIE;
-                break;
-            case NEITHER:
-                level = mGame.isAvailable(this) ? LEVEL_AVAILABLE : LEVEL_BLANK;
-                break;
-        }
-        return level;
     }
 
     private void countCaptures(int totalX[], int totalO[]) {

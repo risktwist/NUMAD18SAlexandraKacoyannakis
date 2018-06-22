@@ -33,9 +33,9 @@ public class ControlFragment extends Fragment {
             }
         });
 
-        //create timer with default 3 minutes
+        //create timer with phase 1 of 1.5 minutes
         final TextView timerView = rootView.findViewById(R.id.timer);
-        new CountDownTimer(180000, 1000) {
+        new CountDownTimer(90000, 1000) {
             public void onTick(long timeToFinished) {
                 timerView.setText(""+String.format("%02d:%02d:%02d",
                         TimeUnit.MILLISECONDS.toHours(timeToFinished),
