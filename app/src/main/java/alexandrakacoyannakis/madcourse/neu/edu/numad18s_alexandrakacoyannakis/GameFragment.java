@@ -36,13 +36,14 @@ public class GameFragment extends Fragment {
     private Tile mSmallTiles[][] = new Tile[9][9];
     private Tile.Owner mPlayer = Tile.Owner.X;
     private Tile currentTile = new Tile(this);
-    private Set<Tile> mAvailable = new HashSet<Tile>();
+    private Set<Tile> mAvailable = new HashSet<>();
     private int mLastLarge = -1;
     private int mLastSmall = -1;
     private ArrayList<String> words = new ArrayList<>();
     private Map<Integer, String> userWords = new HashMap<>(); //will store user words
     private Map<Integer, Map<Integer, String>> boardWords = new HashMap<>();
     private Map<Integer, String> smallBoard = new HashMap<>();
+    private Set<Integer> availableSquares = new HashSet<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,7 @@ public class GameFragment extends Fragment {
 
     private void clearAvailable() {
         mAvailable.clear();
+        availableSquares.clear();
     }
 
     private void addAvailable(Tile tile) {
@@ -62,6 +64,14 @@ public class GameFragment extends Fragment {
 
     public boolean isAvailable(Tile tile) {
         return mAvailable.contains(tile);
+    }
+
+    public boolean isAvailable(int dest) {
+        return availableSquares.contains(dest);
+    }
+
+    private void addAvailableDest(int dest) {
+        availableSquares.add(dest);
     }
 
     @Override
@@ -120,8 +130,8 @@ public class GameFragment extends Fragment {
                             clearUnselectedLetters();
                             makeMove(fLarge, fSmall, currentLetter);
                         }
-
-                        if (isAvailable(smallTile)) {
+                        if (isAvailable(fSmall)) {
+                        // if (isAvailable(smallTile)) {
                             makeMove(fLarge, fSmall, currentLetter);
                         }
                            // switchTurns();
@@ -180,23 +190,23 @@ public class GameFragment extends Fragment {
             for (int dest = 0; dest < 9; dest++) {
                 Tile tile = mSmallTiles[small][dest];
                 if (small == 0 && !tile.getIsSelected() && (dest == 1 || dest == 3 || dest == 4)) {
-                    addAvailable(tile);
+                    addAvailableDest(dest);
                 } else if (small == 1 && !tile.getIsSelected() && (dest == 0 || dest == 2 || dest == 3 || dest == 4 || dest == 5)) {
-                    addAvailable(tile);
+                    addAvailableDest(dest);
                 } else if (small == 2 && !tile.getIsSelected() && (dest == 1 || dest == 4 || dest == 5)) {
-                    addAvailable(tile);
+                    addAvailableDest(dest);
                 } else if (small == 3 && !tile.getIsSelected() && (dest == 0 || dest == 1 || dest == 4 || dest == 6 || dest == 7 )) {
-                    addAvailable(tile);
+                    addAvailableDest(dest);
                 } else if (small == 4 && !tile.getIsSelected()) { //from this tile could move anywhere since it's center
-                    addAvailable(tile);
+                    addAvailableDest(dest);
                 } else if (small == 5 && !tile.getIsSelected() && (dest == 1 || dest == 2 || dest == 4 || dest == 7 || dest == 8)) {
-                    addAvailable(tile);
+                    addAvailableDest(dest);
                 } else if (small == 6 && !tile.getIsSelected() && (dest == 3 || dest == 4 || dest == 7)) {
-                    addAvailable(tile);
+                    addAvailableDest(dest);
                 } else if (small == 7 && !tile.getIsSelected() && (dest == 3 || dest == 4 || dest == 5 || dest == 6 || dest == 8)) {
-                    addAvailable(tile);
+                    addAvailableDest(dest);
                 } else if (small == 8 && !tile.getIsSelected() && (dest == 4 || dest == 5 || dest == 7)) {
-                    addAvailable(tile);
+                    addAvailableDest(dest);
                 }
             }
         }
@@ -207,12 +217,12 @@ public class GameFragment extends Fragment {
     }
 
     private void setAllAvailable() {
-        Log.d("setallavailable", "getting to set all available");
         for (int large = 0; large < 9; large++) {
             for (int small = 0; small < 9; small++) {
                 Tile tile = mSmallTiles[large][small];
                 if (tile.getOwner() == Tile.Owner.NEITHER)
                     addAvailable(tile);
+                    addAvailableDest(small);
             }
         }
     }
