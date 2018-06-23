@@ -37,8 +37,8 @@ public class GameFragment extends Fragment {
     private Tile.Owner mPlayer = Tile.Owner.X;
     private Tile currentTile = new Tile(this);
     private Set<Tile> mAvailable = new HashSet<Tile>();
-    private int mLastLarge;
-    private int mLastSmall;
+    private int mLastLarge = -1;
+    private int mLastSmall = -1;
     private ArrayList<String> words = new ArrayList<>();
     private Map<Integer, String> userWords = new HashMap<>(); //will store user words
     private Map<Integer, Map<Integer, String>> boardWords = new HashMap<>();
@@ -110,19 +110,19 @@ public class GameFragment extends Fragment {
                 inner.setImageResource(getResources().getIdentifier(Character.toString(letter), "drawable", "alexandrakacoyannakis.madcourse.neu.edu.numad18s_alexandrakacoyannakis"));
                 final int fLarge = large;
                 final int fSmall = small;
+                final String currentLetter = Character.toString(letter);
                 final Tile smallTile = mSmallTiles[large][small];
                 smallTile.setView(inner);
-                smallTile.setIsSelected(true);
                 inner.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         if (isNewLargeBoard(fLarge, mLastLarge)) {
                             clearUnselectedLetters();
-                            makeMove(fLarge, fSmall);
+                            makeMove(fLarge, fSmall, currentLetter);
                         }
 
                         if (isAvailable(smallTile)) {
-                            makeMove(fLarge, fSmall);
+                            makeMove(fLarge, fSmall, currentLetter);
                         }
                            // switchTurns();
                     }
@@ -136,17 +136,16 @@ public class GameFragment extends Fragment {
                 .Owner.X;
     }
 
-    private void makeMove(int large, int small) {
+    private void makeMove(int large, int small, String letter) {
         Log.d("make_move", "getting to make move");
         mLastLarge = large;
         mLastSmall = small;
         Tile smallTile = mSmallTiles[large][small];
-        Tile largeTile = mLargeTiles[large];
+       // Tile largeTile = mLargeTiles[large];
         smallTile.setOwner(mPlayer);
-        smallTile.setIsSelected(true);
         smallTile.selectLetterTile();
         currentTile = smallTile;
-        appendLetterToWord(mLastLarge, mLastSmall);
+        appendLetterToWord(mLastLarge, mLastSmall, letter);
         setAvailableFromLastMove(small);
     }
 
@@ -396,19 +395,19 @@ public class GameFragment extends Fragment {
 
     private void clearUnselectedLetters() {
         Log.d("clearing_lines", "clearing lines");
-        for (int small = 0; small < 9; small++) {
-            Tile tile = mSmallTiles[mLastLarge][small];
-            if (!tile.getIsSelected()) {
-                tile.clearLetter();
+        if (mLastLarge != -1) {
+            for (int small = 0; small < 9; small++) {
+                Tile tile = mSmallTiles[mLastLarge][small];
+                if (!tile.getIsSelected()) {
+                    tile.clearLetter();
+                }
             }
         }
     }
 
-    private void appendLetterToWord(int large, int small) {
+    private void appendLetterToWord(int large, int small, String letter) {
 
-        String letter = smallBoard.get(small);
         String currentWord = userWords.get(small);
-
         if (currentWord == null) {
             userWords.put(large, letter);
         } else {

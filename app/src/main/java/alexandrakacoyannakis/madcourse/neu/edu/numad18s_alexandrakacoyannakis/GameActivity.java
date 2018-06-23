@@ -13,6 +13,7 @@ public class GameActivity extends Activity {
     public static final String PREF_RESTORE = "pref_restore";
     private GameFragment mGameFragment;
     private ControlFragment controlFragment;
+    private int finalScore = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +63,7 @@ public class GameActivity extends Activity {
     public void stopGame() {
       //  mGameFragment.saveWords();
         int score = mGameFragment.calculateScore();
+        finalScore += score; //add both phases
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(getString(R.string.timer_finished) + " " + score);
         builder.setCancelable(false);
@@ -76,6 +78,12 @@ public class GameActivity extends Activity {
         dialog.show();
 
         mGameFragment.initGame();
+    }
+
+    public void beginPhase2() {
+        finalScore = mGameFragment.calculateScore();
+        mGameFragment.initGame();
+        controlFragment.getFragmentManager().beginTransaction().detach(controlFragment).attach(controlFragment);
     }
 
     @Override
