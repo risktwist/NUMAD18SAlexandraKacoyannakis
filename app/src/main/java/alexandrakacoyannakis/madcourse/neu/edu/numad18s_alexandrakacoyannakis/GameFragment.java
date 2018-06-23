@@ -1,13 +1,9 @@
 package alexandrakacoyannakis.madcourse.neu.edu.numad18s_alexandrakacoyannakis;
 
 import android.app.Fragment;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +15,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
@@ -42,7 +40,9 @@ public class GameFragment extends Fragment {
     private int mLastLarge;
     private int mLastSmall;
     private ArrayList<String> words = new ArrayList<>();
-    private ArrayList<String> userWords = new ArrayList<>();
+    private Map<Integer, String> userWords = new HashMap<>(); //will store user words
+    private Map<Integer, Map<Integer, String>> boardWords = new HashMap<>();
+    private Map<Integer, String> smallBoard = new HashMap<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -102,7 +102,8 @@ public class GameFragment extends Fragment {
 
                 //remove letter so it is not chosen again
                 boardWord = boardWord.replaceFirst(Character.toString(letter), "");
-                Log.d("random_letter", "Random letter is " + letter);
+                smallBoard.put(small, Character.toString(letter));
+                boardWords.put(large, smallBoard);
 
                 ImageButton inner = (ImageButton) outer.findViewById
                         (mSmallIds[small]);
@@ -111,10 +112,12 @@ public class GameFragment extends Fragment {
                 final int fSmall = small;
                 final Tile smallTile = mSmallTiles[large][small];
                 smallTile.setView(inner);
+                smallTile.setIsSelected(true);
                 inner.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         if (isNewLargeBoard(fLarge, mLastLarge)) {
+                            clearUnselectedLetters();
                             makeMove(fLarge, fSmall);
                         }
 
@@ -140,21 +143,11 @@ public class GameFragment extends Fragment {
         Tile smallTile = mSmallTiles[large][small];
         Tile largeTile = mLargeTiles[large];
         smallTile.setOwner(mPlayer);
+        smallTile.setIsSelected(true);
         smallTile.selectLetterTile();
         currentTile = smallTile;
-
+        appendLetterToWord(mLastLarge, mLastSmall);
         setAvailableFromLastMove(small);
-        /*Tile.Owner oldWinner = largeTile.getOwner();
-        Tile.Owner winner = largeTile.findWinner();
-        if (winner != oldWinner) {
-            largeTile.setOwner(winner);
-        }
-        winner = mEntireBoard.findWinner();
-        mEntireBoard.setOwner(winner);
-        updateAllTiles();
-        if (winner != Tile.Owner.NEITHER) {
-            ((GameActivity)getActivity()).reportWinner(winner);
-        }*/
     }
 
     public void restartGame() {
@@ -178,7 +171,6 @@ public class GameFragment extends Fragment {
         mEntireBoard.setSubTiles(mLargeTiles);
 
         // If the player moves first, set which spots are available
-        Log.d("what_is_initial", Integer.toString(mLastSmall));
         setAvailableFromLastMove(-1);
     }
 
@@ -400,5 +392,27 @@ public class GameFragment extends Fragment {
             return false;
         }
         return true;
+    }
+
+    private void clearUnselectedLetters() {
+        Log.d("clearing_lines", "clearing lines");
+        for (int small = 0; small < 9; small++) {
+            Tile tile = mSmallTiles[mLastLarge][small];
+            if (!tile.getIsSelected()) {
+                tile.clearLetter();
+            }
+        }
+    }
+
+    private void appendLetterToWord(int large, int small) {
+
+        String letter = smallBoard.get(small);
+        String currentWord = userWords.get(small);
+
+        if (currentWord == null) {
+            userWords.put(large, letter);
+        } else {
+            userWords.put(large, currentWord + letter);
+        }
     }
 }

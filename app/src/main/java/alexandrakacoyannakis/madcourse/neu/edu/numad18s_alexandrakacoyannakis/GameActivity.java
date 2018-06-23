@@ -60,6 +60,7 @@ public class GameActivity extends Activity {
 
     //used for when the timer runs out
     public void stopGame() {
+      //  mGameFragment.saveWords();
         int score = mGameFragment.calculateScore();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(getString(R.string.timer_finished) + " " + score);

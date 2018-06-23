@@ -1,6 +1,7 @@
 package alexandrakacoyannakis.madcourse.neu.edu.numad18s_alexandrakacoyannakis;
 
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -131,5 +132,11 @@ public class Tile {
 
         // Neither player has won this tile
         return Owner.NEITHER;
+    }
+
+    public void clearLetter() {
+        if (mView instanceof ImageButton) {
+            ((ImageButton) mView).setImageResource(R.color.available_color);
+        }
     }
 }
