@@ -179,24 +179,23 @@ public class GameFragment extends Fragment {
         if (small != -1) {
             for (int dest = 0; dest < 9; dest++) {
                 Tile tile = mSmallTiles[small][dest];
-                Log.d("smallTile_selected" , currentTile.getIsSelected()+"");
-                if (mLastSmall == 0 && !currentTile.getIsSelected() && (dest == 1 || dest == 3 || dest == 4)) {
+                if (small == 0 && !tile.getIsSelected() && (dest == 1 || dest == 3 || dest == 4)) {
                     addAvailable(tile);
-                } else if (mLastSmall == 1 && !currentTile.getIsSelected() && (dest == 0 || dest == 2 || dest == 3 || dest == 4 || dest == 5)) {
+                } else if (small == 1 && !tile.getIsSelected() && (dest == 0 || dest == 2 || dest == 3 || dest == 4 || dest == 5)) {
                     addAvailable(tile);
-                } else if (mLastSmall == 2 && !currentTile.getIsSelected() && (dest == 1 || dest == 4 || dest == 5)) {
+                } else if (small == 2 && !tile.getIsSelected() && (dest == 1 || dest == 4 || dest == 5)) {
                     addAvailable(tile);
-                } else if (mLastSmall == 3 && !currentTile.getIsSelected() && (dest == 0 || dest == 1 || dest == 4 || dest == 6 || dest == 7 )) {
+                } else if (small == 3 && !tile.getIsSelected() && (dest == 0 || dest == 1 || dest == 4 || dest == 6 || dest == 7 )) {
                     addAvailable(tile);
-                } else if (mLastSmall == 4 && !currentTile.getIsSelected()) { //from this tile could move anywhere since it's center
+                } else if (small == 4 && !tile.getIsSelected()) { //from this tile could move anywhere since it's center
                     addAvailable(tile);
-                } else if (mLastSmall == 5 && !currentTile.getIsSelected() && (dest == 1 || dest == 2 || dest == 4 || dest == 7 || dest == 8)) {
+                } else if (small == 5 && !tile.getIsSelected() && (dest == 1 || dest == 2 || dest == 4 || dest == 7 || dest == 8)) {
                     addAvailable(tile);
-                } else if (mLastSmall == 6 && !currentTile.getIsSelected() && (dest == 3 || dest == 4 || dest == 7)) {
+                } else if (small == 6 && !tile.getIsSelected() && (dest == 3 || dest == 4 || dest == 7)) {
                     addAvailable(tile);
-                } else if (mLastSmall == 7 && !currentTile.getIsSelected() && (dest == 3 || dest == 4 || dest == 5 || dest == 6 || dest == 8)) {
+                } else if (small == 7 && !tile.getIsSelected() && (dest == 3 || dest == 4 || dest == 5 || dest == 6 || dest == 8)) {
                     addAvailable(tile);
-                } else if (mLastSmall == 8 && !currentTile.getIsSelected() && (dest == 4 || dest == 5 || dest == 7)) {
+                } else if (small == 8 && !tile.getIsSelected() && (dest == 4 || dest == 5 || dest == 7)) {
                     addAvailable(tile);
                 }
             }
