@@ -47,8 +47,7 @@ public class ControlFragment extends Fragment {
             }
 
             public void onFinish() {
-                timerView.setText("Time's Up!");
-               // ((GameActivity) getActivity()).stopGame();
+                timerView.setText("Phase 1 Complete!");
                 ((GameActivity) getActivity()).beginPhase2();
             }
         }.start();
@@ -59,5 +58,25 @@ public class ControlFragment extends Fragment {
 
     public void resetTimer() {
         timer.cancel();
+    }
+
+    public void startPhase2Timer() {
+        timer.cancel();
+        final TextView timerView = getView().findViewById(R.id.timer);
+        timer = new CountDownTimer(90000, 1000) {
+            public void onTick(long timeToFinished) {
+                timerView.setText("" + String.format("%02d:%02d:%02d",
+                        TimeUnit.MILLISECONDS.toHours(timeToFinished),
+                        TimeUnit.MILLISECONDS.toMinutes(timeToFinished) - TimeUnit.HOURS.toMinutes(
+                                TimeUnit.MILLISECONDS.toHours(timeToFinished)),
+                        TimeUnit.MILLISECONDS.toSeconds(timeToFinished) - TimeUnit.MINUTES.toSeconds(
+                                TimeUnit.MILLISECONDS.toMinutes(timeToFinished))));
+            }
+
+            public void onFinish() {
+                timerView.setText("Time's Up!");
+                ((GameActivity) getActivity()).stopGame();
+            }
+        }.start();
     }
 }

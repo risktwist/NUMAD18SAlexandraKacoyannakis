@@ -83,7 +83,7 @@ public class GameActivity extends Activity {
     public void beginPhase2() {
         finalScore = mGameFragment.calculateScore();
         mGameFragment.initGame();
-        controlFragment.getFragmentManager().beginTransaction().detach(controlFragment).attach(controlFragment);
+       // controlFragment.startPhase2Timer();
     }
 
     @Override
