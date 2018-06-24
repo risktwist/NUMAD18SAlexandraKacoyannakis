@@ -135,6 +135,13 @@ public class GameFragment extends Fragment {
                 inner.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
+                        //if tile previously selected, unselect it
+                        if (smallTile.getIsSelected()) {
+                            unselectTile(smallTile);
+                            return;
+                        }
+
                         if (isNewLargeBoard(fLarge, mLastLarge)) {
                             clearUnselectedLetters();
                             makeMove(fLarge, fSmall, currentLetter);
@@ -143,7 +150,7 @@ public class GameFragment extends Fragment {
                         // if (isAvailable(smallTile)) {
                             makeMove(fLarge, fSmall, currentLetter);
                         }
-                           // switchTurns();
+
                     }
                 });
             }
@@ -323,35 +330,46 @@ public class GameFragment extends Fragment {
         for (int i=0; i  < userWords.size(); i++) {
             String word = userWords.get(i);
 
-            //check if word is a match
-            if (word != null && correctWords.contains(word)) {
+            //calculate if there is a word for the board
+            if (word != null) {
+                //check if word is a match
+                if (correctWords.contains(word)) {
 
-                //bonus points if word is 9 letter (full board)
-                if (word.length() == 9) {
-                    score += 5;
-                }
-
-                for (int j = 0; j < word.length(); j++) {
-                    char letter = word.charAt(j);
-                    if (isOnePointLetter(letter)){
-                        score += 1;
-                    } else if (isTwoPointLetter(letter)) {
-                        score += 2;
-                    } else if (isThreePointLetter(letter)) {
-                        score += 3;
-                    } else if (isFourPointLetter(letter)) {
-                        score +=4;
-                    } else if (isFivePointLetter(letter)) {
+                    //bonus points if word is 9 letter (full board)
+                    if (word.length() == 9) {
                         score += 5;
-                    } else if (isEightPointLetter(letter)) {
-                        score += 8;
-                    } else if (isTenPointLetter(letter)) {
-                        score += 10;
                     }
+
+                    for (int j = 0; j < word.length(); j++) {
+                        char letter = word.charAt(j);
+                        if (isOnePointLetter(letter)){
+                            score += 1;
+                        } else if (isTwoPointLetter(letter)) {
+                            score += 2;
+                        } else if (isThreePointLetter(letter)) {
+                            score += 3;
+                        } else if (isFourPointLetter(letter)) {
+                            score +=4;
+                        } else if (isFivePointLetter(letter)) {
+                            score += 5;
+                        } else if (isEightPointLetter(letter)) {
+                            score += 8;
+                        } else if (isTenPointLetter(letter)) {
+                            score += 10;
+                        }
+                    }
+                } else {
+                    //subtract 2 points for each incorrect word
+                    score -= 2;
                 }
             }
+        }
 
-
+        //to not discourage players,
+        //set negative score to 0
+        if (score < 0 )
+        {
+            score = 0;
         }
         return score;
     }
@@ -441,6 +459,10 @@ public class GameFragment extends Fragment {
         }
     }
 
+    private void unselectTile(Tile smallTile){
+
+    }
+
     private class CheckWords extends AsyncTask<Void, Integer, ArrayList<String>> {
 
         InputStream inputStream = null;
@@ -448,7 +470,7 @@ public class GameFragment extends Fragment {
         ArrayList<String> words = new ArrayList<>(); //words from the text file
 
         @Override
-        protected ArrayList<String> doInBackground(Void...params) {
+        protected ArrayList<String> doInBackground(Void... params) {
             try {
                 inputStream = getActivity().getAssets().open("wordlist.txt");
                 reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -462,7 +484,7 @@ public class GameFragment extends Fragment {
                 reader.close();
                 inputStream.close();
             } catch (IOException e) {
-                Log.e("message: ",e.getMessage());
+                Log.e("message: ", e.getMessage());
             }
             return words;
         }
