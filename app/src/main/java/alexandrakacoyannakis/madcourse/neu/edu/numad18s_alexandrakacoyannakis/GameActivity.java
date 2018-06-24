@@ -105,5 +105,6 @@ public class GameActivity extends Activity {
                 .putString(PREF_RESTORE, gameData)
                 .commit();
         Log.d("UT3", "state = " + gameData);
+        controlFragment.pauseTimer();
     }
 }

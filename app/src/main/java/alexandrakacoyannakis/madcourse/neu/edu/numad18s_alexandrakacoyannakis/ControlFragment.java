@@ -17,7 +17,9 @@ import java.util.concurrent.TimeUnit;
 
 public class ControlFragment extends Fragment {
 
-    CountDownTimer timer;
+    private CountDownTimer timer;
+    private long timeRemaining; //handle timer when paused
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -68,6 +70,7 @@ public class ControlFragment extends Fragment {
         final TextView timerView = rootView.findViewById(R.id.timer);
         timer = new CountDownTimer(90000, 1000) {
             public void onTick(long timeToFinished) {
+                timeRemaining = timeToFinished;
                 timerView.setText(""+String.format("%02d:%02d",
                         TimeUnit.MILLISECONDS.toMinutes(timeToFinished) - TimeUnit.HOURS.toMinutes(
                                 TimeUnit.MILLISECONDS.toHours(timeToFinished)),
@@ -83,12 +86,18 @@ public class ControlFragment extends Fragment {
         return rootView;
     }
 
+    /**
+     * When game is restarted, need to restart the timer
+     */
     public void resetTimer() {
 
         timer.cancel();
         initalizeTimer();
     }
 
+    /**
+     * start the timer by recreating it for phase 2
+     */
     public void startPhase2Timer() {
         timer.cancel();
 
@@ -99,6 +108,9 @@ public class ControlFragment extends Fragment {
 
     }
 
+    /**
+     * create brand new timer
+     */
     private void initalizeTimer() {
 
         final TextView timerView = getView().findViewById(R.id.timer);
@@ -110,6 +122,28 @@ public class ControlFragment extends Fragment {
                             TimeUnit.MILLISECONDS.toHours(timeToFinished)),
                     TimeUnit.MILLISECONDS.toSeconds(timeToFinished) - TimeUnit.MINUTES.toSeconds(
                             TimeUnit.MILLISECONDS.toMinutes(timeToFinished))));
+            }
+
+            public void onFinish() {
+                ((GameActivity) getActivity()).stopGame();
+            }
+        }.start();
+    }
+
+    public void pauseTimer() {
+        timer.cancel();
+    }
+
+    public void restartTimer() {
+        final TextView timerView = getView().findViewById(R.id.timer);
+
+        timer = new CountDownTimer(timeRemaining, 1000) {
+            public void onTick(long timeToFinished) {
+                timerView.setText(""+String.format("%02d:%02d",
+                        TimeUnit.MILLISECONDS.toMinutes(timeToFinished) - TimeUnit.HOURS.toMinutes(
+                                TimeUnit.MILLISECONDS.toHours(timeToFinished)),
+                        TimeUnit.MILLISECONDS.toSeconds(timeToFinished) - TimeUnit.MINUTES.toSeconds(
+                                TimeUnit.MILLISECONDS.toMinutes(timeToFinished))));
             }
 
             public void onFinish() {
