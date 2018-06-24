@@ -30,6 +30,7 @@ public class GameActivity extends Activity {
             if (gameData != null) {
                 mGameFragment.putState(gameData);
             }
+            controlFragment.restartTimer();
         }
         Log.d("UT3", "restore = " + restore);
     }
