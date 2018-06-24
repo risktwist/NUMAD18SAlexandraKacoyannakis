@@ -35,7 +35,6 @@ public class GameFragment extends Fragment {
     private Tile mLargeTiles[] = new Tile[9];
     private Tile mSmallTiles[][] = new Tile[9][9];
     private Tile.Owner mPlayer = Tile.Owner.X;
-    private Tile currentTile = new Tile(this);
     private Set<Tile> mAvailable = new HashSet<>();
     private int mLastLarge = -1;
     private int mLastSmall = -1;
@@ -61,10 +60,6 @@ public class GameFragment extends Fragment {
 
     private void addAvailable(Tile tile) {
         mAvailable.add(tile);
-    }
-
-    public boolean isAvailable(Tile tile) {
-        return mAvailable.contains(tile);
     }
 
     public boolean isAvailable(int dest) {
