@@ -64,6 +64,13 @@ public class Tile {
         }
     }
 
+    public void unselectTile() {
+        if (mView instanceof ImageButton) {
+            mView.setBackgroundResource(R.color.available_color);
+            isSelected = false;
+        }
+    }
+
     private void countCaptures(int totalX[], int totalO[]) {
         int capturedX, capturedO;
         // Check the horizontal

@@ -456,7 +456,7 @@ public class GameFragment extends Fragment {
     }
 
     private void unselectTile(Tile smallTile){
-
+        smallTile.unselectTile();
     }
 
     private class CheckWords extends AsyncTask<Void, Integer, ArrayList<String>> {
