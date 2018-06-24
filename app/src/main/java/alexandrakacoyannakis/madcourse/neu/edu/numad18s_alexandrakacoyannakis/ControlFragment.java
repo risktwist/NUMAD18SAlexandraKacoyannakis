@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.concurrent.TimeUnit;
 
 
@@ -58,6 +60,9 @@ public class ControlFragment extends Fragment {
             }
         });
 
+        //score
+        final TextView scoreView = rootView.findViewById(R.id.score);
+        scoreView.setText(getString(R.string.score) + " 0");
 
         //create timer with phase 1 of 1.5 minutes
         final TextView timerView = rootView.findViewById(R.id.timer);
@@ -71,7 +76,6 @@ public class ControlFragment extends Fragment {
             }
 
             public void onFinish() {
-                timerView.setText("Complete!");
                 ((GameActivity) getActivity()).beginPhase2();
             }
         }.start();
@@ -109,7 +113,6 @@ public class ControlFragment extends Fragment {
             }
 
             public void onFinish() {
-                timerView.setText("Time's Up!");
                 ((GameActivity) getActivity()).stopGame();
             }
         }.start();
