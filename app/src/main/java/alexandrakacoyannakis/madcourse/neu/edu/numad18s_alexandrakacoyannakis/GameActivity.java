@@ -63,8 +63,7 @@ public class GameActivity extends Activity {
     //used for when the timer runs out
     public void stopGame() {
       //  mGameFragment.saveWords();
-        int score = mGameFragment.calculateScore();
-        finalScore += score; //add both phases
+        int score = mGameFragment.getFinalScore();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(getString(R.string.timer_finished) + " " + finalScore);
         builder.setCancelable(false);
@@ -82,7 +81,7 @@ public class GameActivity extends Activity {
     }
 
     public void beginPhase2() {
-        finalScore = mGameFragment.calculateScore();
+        finalScore = mGameFragment.getFinalScore();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Phase 1 Score: " + finalScore);
         builder.setCancelable(false);
@@ -96,6 +95,11 @@ public class GameActivity extends Activity {
                 });
         final Dialog dialog = builder.create();
         dialog.show();
+    }
+
+    public void updateScore(int score) {
+        finalScore = mGameFragment.getFinalScore();
+        controlFragment.updateScore(finalScore);
     }
 
     @Override

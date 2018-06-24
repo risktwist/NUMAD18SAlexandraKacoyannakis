@@ -173,4 +173,9 @@ public class ControlFragment extends Fragment {
         final Button restart = getView().findViewById(R.id.button_pause);
         restart.setText(R.string.pause_label);
     }
+
+    public void updateScore(int score) {
+        final TextView scoreView = getView().findViewById(R.id.score);
+        scoreView.setText(getString(R.string.score) + " " + score);
+    }
 }

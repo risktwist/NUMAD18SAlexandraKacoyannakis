@@ -51,6 +51,8 @@ public class GameFragment extends Fragment {
     private ArrayList<String> correctWords = new ArrayList<>();
     private ToneGenerator beep;
     private Vibrator vibrate;
+    private int currentScore = 0; //keeps track of the current score
+    private ControlFragment controlFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,6 +80,8 @@ public class GameFragment extends Fragment {
     private void addAvailableDest(int dest) {
         availableSquares.add(dest);
     }
+
+    public int getFinalScore() {return currentScore;}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -152,6 +156,9 @@ public class GameFragment extends Fragment {
                         }
 
                         if (isNewLargeBoard(fLarge, mLastLarge)) {
+                            if (mLastLarge != -1) {
+                                checkIfWord(mLastLarge);
+                            }
                             clearUnselectedLetters();
                             makeMove(fLarge, fSmall, currentLetter);
                         }
@@ -304,53 +311,45 @@ public class GameFragment extends Fragment {
     //calculate the score using the scrabble scores.
     //add a bonus 5 points for any words with all 9 letters
     //subtract 2 points for any incorrect words
-    public int calculateScore() {
-        int score = 0;
-        for (int i=0; i  < userWords.size(); i++) {
-            String word = userWords.get(i);
+    public int calculateScore(boolean isCorrect, String word ) {
 
-            //calculate if there is a word for the board
-            if (word != null) {
-                //check if word is a match
-                if (correctWords.contains(word)) {
-
-                    //bonus points if word is 9 letter (full board)
-                    if (word.length() == 9) {
-                        score += 5;
-                    }
-
-                    for (int j = 0; j < word.length(); j++) {
-                        char letter = word.charAt(j);
-                        if (isOnePointLetter(letter)){
-                            score += 1;
-                        } else if (isTwoPointLetter(letter)) {
-                            score += 2;
-                        } else if (isThreePointLetter(letter)) {
-                            score += 3;
-                        } else if (isFourPointLetter(letter)) {
-                            score +=4;
-                        } else if (isFivePointLetter(letter)) {
-                            score += 5;
-                        } else if (isEightPointLetter(letter)) {
-                            score += 8;
-                        } else if (isTenPointLetter(letter)) {
-                            score += 10;
-                        }
-                    }
-                } else {
-                    //subtract 2 points for each incorrect word
-                    score -= 2;
-                }
+        if (isCorrect) {
+            //bonus points if word is 9 letter (full board)
+            if (word.length() == 9) {
+                currentScore += 5;
             }
+
+            for (int j = 0; j < word.length(); j++) {
+                char letter = word.charAt(j);
+                if (isOnePointLetter(letter)) {
+                    currentScore += 1;
+                } else if (isTwoPointLetter(letter)) {
+                    currentScore += 2;
+                } else if (isThreePointLetter(letter)) {
+                    currentScore += 3;
+                } else if (isFourPointLetter(letter)) {
+                    currentScore += 4;
+                } else if (isFivePointLetter(letter)) {
+                    currentScore += 5;
+                } else if (isEightPointLetter(letter)) {
+                    currentScore += 8;
+                } else if (isTenPointLetter(letter)) {
+                    currentScore += 10;
+                }
+
+            }
+        } else {
+            //subtract 2 points for each incorrect word
+            currentScore -= 2;
         }
 
         //to not discourage players,
         //set negative score to 0
-        if (score < 0 )
+        if (currentScore < 0 )
         {
-            score = 0;
+            currentScore = 0;
         }
-        return score;
+        return currentScore;
     }
 
     // letter checks to determine scoring below
@@ -451,6 +450,21 @@ public class GameFragment extends Fragment {
             userWords.put(large, word);
         }
 
+    }
+
+    private void checkIfWord(int lastBoard) {
+        String word = userWords.get(lastBoard);
+
+        if (word != null) {
+            if (correctWords.contains(word)) {
+                calculateScore(true, word);
+            } else {
+                calculateScore(false, word);
+            }
+        }
+
+        //use activity to update the score
+        ((GameActivity)getActivity()).updateScore(currentScore);
     }
 
     @Override
