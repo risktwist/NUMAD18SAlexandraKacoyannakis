@@ -1,11 +1,13 @@
 package alexandrakacoyannakis.madcourse.neu.edu.numad18s_alexandrakacoyannakis;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.concurrent.TimeUnit;
@@ -42,8 +44,20 @@ public class ControlFragment extends Fragment {
 
         });
 
+        //initialize phase
         final TextView phaseView = rootView.findViewById(R.id.phase);
         phaseView.setText(R.string.phase_1);
+
+        //acknowledgements button
+        final Button acknowledgement = rootView.findViewById(R.id.game_acknowlegements);
+        acknowledgement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), Acknowledgments.class);
+                getActivity().startActivity(intent);
+            }
+        });
+
 
         //create timer with phase 1 of 1.5 minutes
         final TextView timerView = rootView.findViewById(R.id.timer);
