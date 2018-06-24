@@ -146,7 +146,7 @@ public class GameFragment extends Fragment {
 
                         //if tile previously selected, unselect it
                         if (smallTile.getIsSelected()) {
-                            unselectTile(smallTile, fLarge);
+                            unselectTile(smallTile, fLarge, currentLetter);
                             return;
                         }
 
@@ -437,11 +437,19 @@ public class GameFragment extends Fragment {
         }
     }
 
-    private void unselectTile(Tile smallTile, int large){
-        smallTile.unselectTile();
+    private void unselectTile(Tile smallTile, int large, String currentLetter){
+
         String word = userWords.get(large);
-        word = word.substring(0, word.length() -1);
-        userWords.put(large, word);
+        int last = word.length() - 1;
+
+        //unselect and remove letter only if last tile selected
+        if (Character.toString(word.charAt(last)).equals(currentLetter)) {
+
+            smallTile.unselectTile();
+            word = word.substring(0, last);
+            userWords.put(large, word);
+        }
+
     }
 
     @Override
