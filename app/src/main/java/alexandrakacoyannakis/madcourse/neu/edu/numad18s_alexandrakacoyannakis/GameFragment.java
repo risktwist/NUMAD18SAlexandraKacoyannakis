@@ -134,7 +134,7 @@ public class GameFragment extends Fragment {
 
                         //if tile previously selected, unselect it
                         if (smallTile.getIsSelected()) {
-                            unselectTile(smallTile);
+                            unselectTile(smallTile, fLarge);
                             return;
                         }
 
@@ -167,7 +167,7 @@ public class GameFragment extends Fragment {
         smallTile.setOwner(mPlayer);
         smallTile.selectLetterTile();
         currentTile = smallTile;
-        appendLetterToWord(mLastLarge, mLastSmall, letter);
+        appendLetterToWord(mLastLarge, letter);
         setAvailableFromLastMove(small);
     }
 
@@ -445,7 +445,7 @@ public class GameFragment extends Fragment {
         }
     }
 
-    private void appendLetterToWord(int large, int small, String letter) {
+    private void appendLetterToWord(int large, String letter) {
 
         String currentWord = userWords.get(large);
         if (currentWord == null) {
@@ -455,8 +455,11 @@ public class GameFragment extends Fragment {
         }
     }
 
-    private void unselectTile(Tile smallTile){
+    private void unselectTile(Tile smallTile, int large){
         smallTile.unselectTile();
+        String word = userWords.get(large);
+        word = word.substring(0, word.length() -1);
+        userWords.put(large, word);
     }
 
     private class CheckWords extends AsyncTask<Void, Integer, ArrayList<String>> {
