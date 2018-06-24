@@ -53,7 +53,7 @@ public class ControlFragment extends Fragment {
         acknowledgement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), Acknowledgments.class);
+                Intent intent = new Intent(view.getContext(), GameAcknowledgements.class);
                 getActivity().startActivity(intent);
             }
         });
