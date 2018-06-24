@@ -31,6 +31,7 @@
     <string name="declare_winner">%1$s is the winner</string>
     <string name="restart_label">Restart</string>
     <string name="main_menu_label">Main Menu</string>
+    <string name="pause_label">Pause</string>
     <string name="timer_finished">Time\'s Up! Final score: </string>
 
     <!--Fragment strings -->

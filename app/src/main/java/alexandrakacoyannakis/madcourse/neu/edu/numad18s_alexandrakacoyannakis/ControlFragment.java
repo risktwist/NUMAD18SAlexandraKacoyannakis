@@ -33,6 +33,14 @@ public class ControlFragment extends Fragment {
                 ((GameActivity) getActivity()).restartGame();
             }
         });
+        View pause = rootView.findViewById((R.id.button_pause));
+        pause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((GameActivity) getActivity()).onPause();
+            }
+
+        });
 
         //create timer with phase 1 of 1.5 minutes
         final TextView timerView = rootView.findViewById(R.id.timer);
