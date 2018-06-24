@@ -10,8 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.concurrent.TimeUnit;
 
 
@@ -92,7 +90,7 @@ public class ControlFragment extends Fragment {
     public void resetTimer() {
 
         timer.cancel();
-        initalizeTimer();
+        initializeTimer();
     }
 
     /**
@@ -104,14 +102,14 @@ public class ControlFragment extends Fragment {
         //update phase text to phase 2
         final TextView phaseView = getView().findViewById(R.id.phase);
         phaseView.setText(R.string.phase_2);
-        initalizeTimer();
+        initializeTimer();
 
     }
 
     /**
      * create brand new timer
      */
-    private void initalizeTimer() {
+    private void initializeTimer() {
 
         final TextView timerView = getView().findViewById(R.id.timer);
 
@@ -130,10 +128,17 @@ public class ControlFragment extends Fragment {
         }.start();
     }
 
+    /**
+     * pause timer when pause button is pressed
+     * in GameActivity
+     */
     public void pauseTimer() {
         timer.cancel();
     }
 
+    /**
+     * restart timer when game is reloaded
+     */
     public void restartTimer() {
         final TextView timerView = getView().findViewById(R.id.timer);
 
