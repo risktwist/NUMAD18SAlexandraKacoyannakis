@@ -416,7 +416,7 @@ public class GameFragment extends Fragment {
 
     private void appendLetterToWord(int large, int small, String letter) {
 
-        String currentWord = userWords.get(small);
+        String currentWord = userWords.get(large);
         if (currentWord == null) {
             userWords.put(large, letter);
         } else {
