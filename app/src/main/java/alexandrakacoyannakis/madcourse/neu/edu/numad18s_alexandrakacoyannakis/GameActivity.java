@@ -89,13 +89,12 @@ public class GameActivity extends Activity {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        finish();
+                        mGameFragment.restartGame();
+                        controlFragment.startPhase2Timer();
                     }
                 });
         final Dialog dialog = builder.create();
         dialog.show();
-        mGameFragment.initGame();
-       // controlFragment.startPhase2Timer();
     }
 
     @Override
