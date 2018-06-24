@@ -35,6 +35,7 @@
     <string name="timer_finished">Time\'s Up! Final score: </string>
     <string name="phase_1">Phase 1</string>
     <string name="phase_2">Phase 2</string>
+    <string name="score">Score: </string>
 
     <!--Fragment strings -->
     <string name="continue_label">Continue</string>
