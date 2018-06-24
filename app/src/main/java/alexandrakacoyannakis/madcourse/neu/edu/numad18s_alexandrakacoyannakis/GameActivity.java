@@ -36,7 +36,7 @@ public class GameActivity extends Activity {
 
     public void restartGame() {
         mGameFragment.restartGame();
-        //getFragmentManager().beginTransaction().detach(controlFragment).attach(controlFragment).commit();
+       // controlFragment.resetTimer();
 
     }
 

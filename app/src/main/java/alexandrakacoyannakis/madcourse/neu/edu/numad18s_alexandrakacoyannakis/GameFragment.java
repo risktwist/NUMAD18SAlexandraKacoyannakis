@@ -313,7 +313,7 @@ public class GameFragment extends Fragment {
         int score = 0;
         for (int i=0; i  < userWords.size(); i++) {
             String word = userWords.get(i);
-            if (word.length() == 9) {
+            if (word != null && word.length() == 9) {
                 score += 5;
             }
 
