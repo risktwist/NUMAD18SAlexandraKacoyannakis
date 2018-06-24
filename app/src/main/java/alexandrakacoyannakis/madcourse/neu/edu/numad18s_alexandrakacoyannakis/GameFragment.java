@@ -155,7 +155,6 @@ public class GameFragment extends Fragment {
                             makeMove(fLarge, fSmall, currentLetter);
                         }
                         if (isAvailable(fSmall)) {
-                        // if (isAvailable(smallTile)) {
                             makeMove(fLarge, fSmall, currentLetter);
                         }
 
