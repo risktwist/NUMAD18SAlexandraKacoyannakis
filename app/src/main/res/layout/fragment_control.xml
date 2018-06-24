@@ -8,7 +8,7 @@
     android:padding="@dimen/control_padding"
     android:id="@+id/fragment_control"
     tools:context=".GameActivity"
-    android:rowCount="2">
+    android:rowCount="3">
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
