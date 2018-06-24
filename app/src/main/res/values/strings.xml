@@ -33,6 +33,8 @@
     <string name="main_menu_label">Main Menu</string>
     <string name="pause_label">Pause</string>
     <string name="timer_finished">Time\'s Up! Final score: </string>
+    <string name="phase_1">Phase 1</string>
+    <string name="phase_2">Phase 2</string>
 
     <!--Fragment strings -->
     <string name="continue_label">Continue</string>

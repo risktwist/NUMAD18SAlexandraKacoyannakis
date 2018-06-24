@@ -42,6 +42,9 @@ public class ControlFragment extends Fragment {
 
         });
 
+        final TextView phaseView = rootView.findViewById(R.id.phase);
+        phaseView.setText(R.string.phase_1);
+
         //create timer with phase 1 of 1.5 minutes
         final TextView timerView = rootView.findViewById(R.id.timer);
         timer = new CountDownTimer(90000, 1000) {
@@ -54,10 +57,12 @@ public class ControlFragment extends Fragment {
             }
 
             public void onFinish() {
-                timerView.setText("Phase 1 Complete!");
+                timerView.setText("Complete!");
                 ((GameActivity) getActivity()).beginPhase2();
             }
         }.start();
+
+
 
 
         return rootView;
@@ -69,6 +74,11 @@ public class ControlFragment extends Fragment {
 
     public void startPhase2Timer() {
         timer.cancel();
+
+        //update phase text to phase 2
+        final TextView phaseView = getView().findViewById(R.id.phase);
+        phaseView.setText(R.string.phase_2);
+
         final TextView timerView = getView().findViewById(R.id.timer);
         timer = new CountDownTimer(90000, 1000) {
             public void onTick(long timeToFinished) {
