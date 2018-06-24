@@ -1,10 +1,12 @@
 package alexandrakacoyannakis.madcourse.neu.edu.numad18s_alexandrakacoyannakis;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,11 +50,13 @@ public class GameFragment extends Fragment {
     private Set<Integer> availableSquares = new HashSet<>();
     private ArrayList<String> correctWords = new ArrayList<>();
     private ToneGenerator beep;
+    private Vibrator vibrate;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         beep = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
+        vibrate = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
         // Retain this fragment across configuration changes.
         setRetainInstance(true);
         initGame();
@@ -136,8 +140,10 @@ public class GameFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
 
-
+                        //when tile is selected, beep and vibrate will occur
                         beep.startTone(ToneGenerator.TONE_CDMA_PIP,150);
+                        vibrate.vibrate(150);
+
                         //if tile previously selected, unselect it
                         if (smallTile.getIsSelected()) {
                             unselectTile(smallTile, fLarge);
