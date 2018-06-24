@@ -26,7 +26,7 @@
     <string name="long_app_name">Scroggle</string>
     <string name="action_settings">Settings</string>
     <string name="ok_label">OK</string>
-    <string name="about_title">About Scroggle</string>
+    <string name="about_title">How to Play Scroggle</string>
     <string name="about_text">\ This game is played just like regular Tic Tac Toe with one difference: to win a tile you have to win a smaller game of Tic Tac Toe inside that tile.\n\ \n\ A tie happens when there are no further moves. In the case of a tie in a small board, that will count as a win for both sides in the larger game. </string>
     <string name="declare_winner">%1$s is the winner</string>
     <string name="restart_label">Restart</string>
@@ -36,7 +36,7 @@
 
     <!--Fragment strings -->
     <string name="continue_label">Continue</string>
-    <string name="about_label">About</string>
+    <string name="about_label">How to Play</string>
     <string name="new_game_label">New Game</string>
 
     <!-- TODO: Remove or change this placeholder text -->
