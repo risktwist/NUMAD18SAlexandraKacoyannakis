@@ -1,6 +1,8 @@
 package alexandrakacoyannakis.madcourse.neu.edu.numad18s_alexandrakacoyannakis;
 
 import android.app.Fragment;
+import android.media.AudioManager;
+import android.media.ToneGenerator;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -45,10 +47,12 @@ public class GameFragment extends Fragment {
     private Map<Integer, String> smallBoard = new HashMap<>();
     private Set<Integer> availableSquares = new HashSet<>();
     private ArrayList<String> correctWords = new ArrayList<>();
+    private ToneGenerator beep;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        beep = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
         // Retain this fragment across configuration changes.
         setRetainInstance(true);
         initGame();
@@ -132,6 +136,8 @@ public class GameFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
 
+
+                        beep.startTone(ToneGenerator.TONE_CDMA_PIP,150);
                         //if tile previously selected, unselect it
                         if (smallTile.getIsSelected()) {
                             unselectTile(smallTile, fLarge);
@@ -278,34 +284,6 @@ public class GameFragment extends Fragment {
         }
         setAvailableFromLastMove(mLastSmall);
         updateAllTiles();
-    }
-
-    private class LoadWordTask extends AsyncTask<Void, Integer, ArrayList<String>> {
-
-        InputStream inputStream = null;
-        BufferedReader reader = null;
-        ArrayList<String> words = new ArrayList<>(); //words from the text file
-
-        @Override
-        protected ArrayList<String> doInBackground(Void...params) {
-            try {
-                inputStream = getActivity().getAssets().open("wordlist.txt");
-                reader = new BufferedReader(new InputStreamReader(inputStream));
-                String line;
-
-                //only add 9 character words for block
-                while ((line = reader.readLine()) != null) {
-                    if (line.length() == 9) {
-                        words.add(line);
-                    }
-                }
-                reader.close();
-                inputStream.close();
-            } catch (IOException e) {
-                Log.e("message: ",e.getMessage());
-            }
-            return words;
-        }
     }
 
     private String randomNineLetterWord(ArrayList<String> smallBoardWords) {
@@ -461,6 +439,52 @@ public class GameFragment extends Fragment {
         userWords.put(large, word);
     }
 
+    @Override
+    public void onDestroy()  {
+        super.onDestroy();
+        beep.release();
+    }
+
+    /**
+     * Load Word Task is used to load the letters for the
+     * tiles on each of the 9 boards.
+     *
+     * It specifically looks for 9 letter words in the
+     * provided text file.
+     */
+    private class LoadWordTask extends AsyncTask<Void, Integer, ArrayList<String>> {
+
+        InputStream inputStream = null;
+        BufferedReader reader = null;
+        ArrayList<String> words = new ArrayList<>(); //words from the text file
+
+        @Override
+        protected ArrayList<String> doInBackground(Void...params) {
+            try {
+                inputStream = getActivity().getAssets().open("wordlist.txt");
+                reader = new BufferedReader(new InputStreamReader(inputStream));
+                String line;
+
+                //only add 9 character words for block
+                while ((line = reader.readLine()) != null) {
+                    if (line.length() == 9) {
+                        words.add(line);
+                    }
+                }
+                reader.close();
+                inputStream.close();
+            } catch (IOException e) {
+                Log.e("message: ",e.getMessage());
+            }
+            return words;
+        }
+    }
+
+    /**
+     * CheckWords is an async task that loads all of the words provided by
+     * the text file. These words will then later be used to check against
+     * the user input from each board to see if the word is correct.
+     */
     private class CheckWords extends AsyncTask<Void, Integer, ArrayList<String>> {
 
         InputStream inputStream = null;
@@ -487,4 +511,6 @@ public class GameFragment extends Fragment {
             return words;
         }
     }
+
+
 }
