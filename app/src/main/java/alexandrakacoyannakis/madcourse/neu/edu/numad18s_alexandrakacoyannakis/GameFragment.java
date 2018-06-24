@@ -163,7 +163,6 @@ public class GameFragment extends Fragment {
         mLastLarge = large;
         mLastSmall = small;
         Tile smallTile = mSmallTiles[large][small];
-       // Tile largeTile = mLargeTiles[large];
         smallTile.setOwner(mPlayer);
         smallTile.selectLetterTile();
         currentTile = smallTile;
