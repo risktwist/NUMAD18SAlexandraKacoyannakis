@@ -448,6 +448,7 @@ public class GameFragment extends Fragment {
     public void onDestroy()  {
         super.onDestroy();
         beep.release();
+        vibrate.cancel();
     }
 
     /**
