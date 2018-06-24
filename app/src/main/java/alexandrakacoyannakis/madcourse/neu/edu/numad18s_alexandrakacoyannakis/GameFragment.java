@@ -147,6 +147,7 @@ public class GameFragment extends Fragment {
                         //if tile previously selected, unselect it
                         if (smallTile.getIsSelected()) {
                             unselectTile(smallTile, fLarge, currentLetter);
+                            setAvailableFromLastMove(mLastSmall);
                             return;
                         }
 
@@ -352,6 +353,7 @@ public class GameFragment extends Fragment {
         return score;
     }
 
+    // letter checks to determine scoring below
     private boolean isOnePointLetter(char letter) {
         if (letter == 'e' || letter == 'a' || letter == 'i' || letter == 'o' || letter == 'n'
                 || letter == 'r' || letter == 't' || letter == 'l' || letter =='s' || letter == 'u') {
@@ -444,7 +446,6 @@ public class GameFragment extends Fragment {
 
         //unselect and remove letter only if last tile selected
         if (Character.toString(word.charAt(last)).equals(currentLetter)) {
-
             smallTile.unselectTile();
             word = word.substring(0, last);
             userWords.put(large, word);
