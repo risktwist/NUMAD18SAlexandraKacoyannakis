@@ -62,14 +62,27 @@ public class ControlFragment extends Fragment {
             }
         }.start();
 
-
-
-
         return rootView;
     }
 
     public void resetTimer() {
+
         timer.cancel();
+        final TextView timerView = getView().findViewById(R.id.timer);
+        timer = new CountDownTimer(90000, 1000) {
+            public void onTick(long timeToFinished) {
+                timerView.setText(""+String.format("%02d:%02d",
+                        TimeUnit.MILLISECONDS.toMinutes(timeToFinished) - TimeUnit.HOURS.toMinutes(
+                                TimeUnit.MILLISECONDS.toHours(timeToFinished)),
+                        TimeUnit.MILLISECONDS.toSeconds(timeToFinished) - TimeUnit.MINUTES.toSeconds(
+                                TimeUnit.MILLISECONDS.toMinutes(timeToFinished))));
+            }
+
+            public void onFinish() {
+                timerView.setText("Complete!");
+                ((GameActivity) getActivity()).beginPhase2();
+            }
+        }.start();
     }
 
     public void startPhase2Timer() {
@@ -78,8 +91,14 @@ public class ControlFragment extends Fragment {
         //update phase text to phase 2
         final TextView phaseView = getView().findViewById(R.id.phase);
         phaseView.setText(R.string.phase_2);
+        initalizeTimer();
+
+    }
+
+    private void initalizeTimer() {
 
         final TextView timerView = getView().findViewById(R.id.timer);
+
         timer = new CountDownTimer(90000, 1000) {
             public void onTick(long timeToFinished) {
                 timerView.setText("" + String.format("%02d:%02d:%02d",

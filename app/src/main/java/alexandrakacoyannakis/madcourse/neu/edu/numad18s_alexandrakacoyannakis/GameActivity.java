@@ -22,7 +22,7 @@ public class GameActivity extends Activity {
         // Restore game here...
         mGameFragment = (GameFragment) getFragmentManager()
                 .findFragmentById(R.id.fragment_game);
-        controlFragment = (ControlFragment) getFragmentManager().findFragmentById(R.id.fragment_control);
+        controlFragment = (ControlFragment) getFragmentManager().findFragmentById(R.id.fragment_game_controls);
         boolean restore = getIntent().getBooleanExtra(KEY_RESTORE, false);
         if (restore) {
             String gameData = getPreferences(MODE_PRIVATE)
@@ -36,7 +36,7 @@ public class GameActivity extends Activity {
 
     public void restartGame() {
         mGameFragment.restartGame();
-       // controlFragment.resetTimer();
+        controlFragment.resetTimer();
 
     }
 
