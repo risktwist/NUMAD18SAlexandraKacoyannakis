@@ -46,8 +46,7 @@ public class ControlFragment extends Fragment {
         final TextView timerView = rootView.findViewById(R.id.timer);
         timer = new CountDownTimer(90000, 1000) {
             public void onTick(long timeToFinished) {
-                timerView.setText(""+String.format("%02d:%02d:%02d",
-                        TimeUnit.MILLISECONDS.toHours(timeToFinished),
+                timerView.setText(""+String.format("%02d:%02d",
                         TimeUnit.MILLISECONDS.toMinutes(timeToFinished) - TimeUnit.HOURS.toMinutes(
                                 TimeUnit.MILLISECONDS.toHours(timeToFinished)),
                         TimeUnit.MILLISECONDS.toSeconds(timeToFinished) - TimeUnit.MINUTES.toSeconds(
