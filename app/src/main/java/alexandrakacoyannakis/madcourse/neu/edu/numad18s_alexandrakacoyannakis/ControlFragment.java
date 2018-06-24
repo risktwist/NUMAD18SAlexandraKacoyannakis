@@ -1,6 +1,7 @@
 package alexandrakacoyannakis.madcourse.neu.edu.numad18s_alexandrakacoyannakis;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.os.CountDownTimer;
@@ -41,7 +42,13 @@ public class ControlFragment extends Fragment {
         pause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((GameActivity) getActivity()).onPause();
+                Button button = (Button) view;
+                if (button.getText().toString().equals("Pause")) {
+                    ((GameActivity) getActivity()).onPause();
+                } else {
+                    ((GameActivity) getActivity()).onRestart();
+                }
+
             }
 
         });
@@ -155,5 +162,15 @@ public class ControlFragment extends Fragment {
                 ((GameActivity) getActivity()).stopGame();
             }
         }.start();
+    }
+
+    public void updatePauseButton() {
+        final Button pause = getView().findViewById(R.id.button_pause);
+        pause.setText(R.string.continue_label);
+    }
+
+    public void updateRestartButton() {
+        final Button restart = getView().findViewById(R.id.button_pause);
+        restart.setText(R.string.pause_label);
     }
 }

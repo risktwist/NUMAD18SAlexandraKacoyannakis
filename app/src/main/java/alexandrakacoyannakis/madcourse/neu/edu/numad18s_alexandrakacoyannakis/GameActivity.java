@@ -107,5 +107,18 @@ public class GameActivity extends Activity {
                 .commit();
         Log.d("UT3", "state = " + gameData);
         controlFragment.pauseTimer();
+        controlFragment.updatePauseButton();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        String gameData = getPreferences(MODE_PRIVATE)
+                .getString(PREF_RESTORE, null);
+        if (gameData != null) {
+            mGameFragment.putState(gameData);
+        }
+        controlFragment.restartTimer();
+        controlFragment.updateRestartButton();
     }
 }
