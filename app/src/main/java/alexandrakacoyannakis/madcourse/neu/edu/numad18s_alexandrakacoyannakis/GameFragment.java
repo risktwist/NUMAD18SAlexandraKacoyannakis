@@ -44,6 +44,7 @@ public class GameFragment extends Fragment {
     private Map<Integer, Map<Integer, String>> boardWords = new HashMap<>();
     private Map<Integer, String> smallBoard = new HashMap<>();
     private Set<Integer> availableSquares = new HashSet<>();
+    private ArrayList<String> correctWords = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -90,7 +91,15 @@ public class GameFragment extends Fragment {
         } catch (ExecutionException e) {
             Log.e("'error", e.getMessage());
         }
-        Log.v("word_result", "word size from results is " + words.size());
+
+        CheckWords checkWords = new CheckWords();
+        try{
+            correctWords = checkWords.execute().get();
+        } catch (InterruptedException e) {
+            Log.e("error", e.getMessage());
+        } catch (ExecutionException e) {
+            Log.e("'error", e.getMessage());
+        }
 
         initViews(rootView, words);
         updateAllTiles();
@@ -313,28 +322,36 @@ public class GameFragment extends Fragment {
         int score = 0;
         for (int i=0; i  < userWords.size(); i++) {
             String word = userWords.get(i);
-            if (word != null && word.length() == 9) {
-                score += 5;
-            }
 
-            for (int j = 0; j < word.length(); j++) {
-                char letter = word.charAt(j);
-                if (isOnePointLetter(letter)){
-                    score += 1;
-                } else if (isTwoPointLetter(letter)) {
-                    score += 2;
-                } else if (isThreePointLetter(letter)) {
-                    score += 3;
-                } else if (isFourPointLetter(letter)) {
-                    score +=4;
-                } else if (isFivePointLetter(letter)) {
+            //check if word is a match
+            if (word != null && correctWords.contains(word)) {
+
+                //bonus points if word is 9 letter (full board)
+                if (word.length() == 9) {
                     score += 5;
-                } else if (isEightPointLetter(letter)) {
-                    score += 8;
-                } else if (isTenPointLetter(letter)) {
-                    score += 10;
+                }
+
+                for (int j = 0; j < word.length(); j++) {
+                    char letter = word.charAt(j);
+                    if (isOnePointLetter(letter)){
+                        score += 1;
+                    } else if (isTwoPointLetter(letter)) {
+                        score += 2;
+                    } else if (isThreePointLetter(letter)) {
+                        score += 3;
+                    } else if (isFourPointLetter(letter)) {
+                        score +=4;
+                    } else if (isFivePointLetter(letter)) {
+                        score += 5;
+                    } else if (isEightPointLetter(letter)) {
+                        score += 8;
+                    } else if (isTenPointLetter(letter)) {
+                        score += 10;
+                    }
                 }
             }
+
+
         }
         return score;
     }
@@ -421,6 +438,33 @@ public class GameFragment extends Fragment {
             userWords.put(large, letter);
         } else {
             userWords.put(large, currentWord + letter);
+        }
+    }
+
+    private class CheckWords extends AsyncTask<Void, Integer, ArrayList<String>> {
+
+        InputStream inputStream = null;
+        BufferedReader reader = null;
+        ArrayList<String> words = new ArrayList<>(); //words from the text file
+
+        @Override
+        protected ArrayList<String> doInBackground(Void...params) {
+            try {
+                inputStream = getActivity().getAssets().open("wordlist.txt");
+                reader = new BufferedReader(new InputStreamReader(inputStream));
+                String line;
+
+                //only add 9 character words for block
+                while ((line = reader.readLine()) != null) {
+                    words.add(line);
+
+                }
+                reader.close();
+                inputStream.close();
+            } catch (IOException e) {
+                Log.e("message: ",e.getMessage());
+            }
+            return words;
         }
     }
 }

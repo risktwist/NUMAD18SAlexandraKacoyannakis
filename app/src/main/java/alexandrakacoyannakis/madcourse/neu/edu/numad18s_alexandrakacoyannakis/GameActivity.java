@@ -65,7 +65,7 @@ public class GameActivity extends Activity {
         int score = mGameFragment.calculateScore();
         finalScore += score; //add both phases
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(getString(R.string.timer_finished) + " " + score);
+        builder.setMessage(getString(R.string.timer_finished) + " " + finalScore);
         builder.setCancelable(false);
         builder.setPositiveButton(R.string.ok_label,
                 new DialogInterface.OnClickListener() {
@@ -82,6 +82,18 @@ public class GameActivity extends Activity {
 
     public void beginPhase2() {
         finalScore = mGameFragment.calculateScore();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Phase 1 Score: " + finalScore);
+        builder.setCancelable(false);
+        builder.setPositiveButton(R.string.ok_label,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                });
+        final Dialog dialog = builder.create();
+        dialog.show();
         mGameFragment.initGame();
        // controlFragment.startPhase2Timer();
     }
