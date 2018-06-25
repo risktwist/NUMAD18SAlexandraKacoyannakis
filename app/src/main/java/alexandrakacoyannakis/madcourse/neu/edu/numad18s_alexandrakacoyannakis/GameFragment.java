@@ -147,10 +147,11 @@ public class GameFragment extends Fragment {
                         }
 
                         if (isNewLargeBoard(fLarge, mLastLarge)) {
+                            String word = "";
                             if (mLastLarge != -1) {
-                                checkIfWord(mLastLarge);
+                                word = checkIfWord(mLastLarge);
+                                clearUnselectedLetters(word);
                             }
-                            clearUnselectedLetters();
                             makeMove(fLarge, fSmall, currentLetter);
                         }
                         if (isAvailable(fSmall)) {
@@ -402,9 +403,8 @@ public class GameFragment extends Fragment {
         return true;
     }
 
-    private void clearUnselectedLetters() {
-        Log.d("clearing_lines", "clearing lines");
-        if (mLastLarge != -1) {
+    private void clearUnselectedLetters(String word) {
+        if (word != null && word.length() > 0) {
             for (int small = 0; small < 9; small++) {
                 Tile tile = mSmallTiles[mLastLarge][small];
                 if (!tile.getIsSelected()) {
@@ -446,7 +446,7 @@ public class GameFragment extends Fragment {
 
     }
 
-    private void checkIfWord(int lastBoard) {
+    private String checkIfWord(int lastBoard) {
         String word = userWords.get(lastBoard);
 
         if (word != null) {
@@ -458,6 +458,8 @@ public class GameFragment extends Fragment {
                 ((GameActivity)getActivity()).updateScore(currentScore, "");
             }
         }
+
+        return word;
     }
 
     @Override
