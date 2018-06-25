@@ -18,6 +18,7 @@ public class ControlFragment extends Fragment {
 
     private CountDownTimer timer;
     private long timeRemaining; //handle timer when paused
+    private boolean playMusic = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,7 +77,13 @@ public class ControlFragment extends Fragment {
         turnOffMusic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((GameActivity) getActivity()).turnOffMusic();
+                playMusic = !playMusic;
+                ((GameActivity) getActivity()).turnOffMusic(playMusic);
+                if (playMusic) {
+                    turnOffMusic.setText(R.string.turn_off_music);
+                } else {
+                    turnOffMusic.setText(R.string.turn_on_music);
+                }
             }
         });
 

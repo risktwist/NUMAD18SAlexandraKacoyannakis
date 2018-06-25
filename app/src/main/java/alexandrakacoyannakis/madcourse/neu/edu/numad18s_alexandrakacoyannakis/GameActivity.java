@@ -107,8 +107,15 @@ public class GameActivity extends Activity {
         controlFragment.updateScore(score, word);
     }
 
-    public void turnOffMusic() {
-        backgroundMusic.stop();
+    public void turnOffMusic(boolean playMusic) {
+        if (playMusic) {
+            backgroundMusic = MediaPlayer.create(this, R.raw.background_music);
+            backgroundMusic.start();
+        } else {
+            backgroundMusic.stop();
+            backgroundMusic.reset();
+        }
+
     }
 
     @Override
