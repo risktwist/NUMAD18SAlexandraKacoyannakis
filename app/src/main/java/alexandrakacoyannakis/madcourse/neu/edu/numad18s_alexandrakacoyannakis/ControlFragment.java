@@ -32,12 +32,16 @@ public class ControlFragment extends Fragment {
                 getActivity().finish();
             }
         });
+
+        //restart button
         restart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ((GameActivity) getActivity()).restartGame();
             }
         });
+
+        //pause button
         View pause = rootView.findViewById((R.id.button_pause));
         pause.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +68,15 @@ public class ControlFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), GameAcknowledgements.class);
                 getActivity().startActivity(intent);
+            }
+        });
+
+        //turn off music
+        final Button turnOffMusic = rootView.findViewById(R.id.turn_off_music);
+        turnOffMusic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((GameActivity) getActivity()).turnOffMusic();
             }
         });
 

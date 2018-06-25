@@ -107,6 +107,10 @@ public class GameActivity extends Activity {
         controlFragment.updateScore(score, word);
     }
 
+    public void turnOffMusic() {
+        backgroundMusic.stop();
+    }
+
     @Override
     protected void onPause() {
         super.onPause();
