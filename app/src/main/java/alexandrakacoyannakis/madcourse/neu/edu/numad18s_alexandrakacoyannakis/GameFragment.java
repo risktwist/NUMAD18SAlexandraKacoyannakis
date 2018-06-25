@@ -52,7 +52,6 @@ public class GameFragment extends Fragment {
     private ToneGenerator beep;
     private Vibrator vibrate;
     private int currentScore = 0; //keeps track of the current score
-    private ControlFragment controlFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

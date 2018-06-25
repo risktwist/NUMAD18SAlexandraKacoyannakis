@@ -177,5 +177,8 @@ public class ControlFragment extends Fragment {
     public void updateScore(int score) {
         final TextView scoreView = getView().findViewById(R.id.score);
         scoreView.setText(getString(R.string.score) + " " + score);
+
+        final TextView wordsView = getView().findViewById(R.id.user_correct_words);
+        wordsView.setText(getString(R.string.correct_words));
     }
 }

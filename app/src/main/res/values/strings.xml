@@ -41,5 +41,6 @@
     <string name="continue_label">Continue</string>
     <string name="about_label">How to Play</string>
     <string name="new_game_label">New Game</string>
+    <string name="correct_words">Correct Words: </string>
 
 </resources>
