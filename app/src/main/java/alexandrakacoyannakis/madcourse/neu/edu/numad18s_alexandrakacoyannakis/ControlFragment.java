@@ -76,6 +76,11 @@ public class ControlFragment extends Fragment {
         timer = new CountDownTimer(90000, 1000) {
             public void onTick(long timeToFinished) {
                 timeRemaining = timeToFinished;
+                if (timeToFinished < 10000) {
+                    timerView.setTextColor(getResources().getColor(R.color.red_color));
+                } else {
+                    timerView.setTextColor(getResources().getColor(R.color.white_color));
+                }
                 timerView.setText(""+String.format("%02d:%02d",
                         TimeUnit.MILLISECONDS.toMinutes(timeToFinished) - TimeUnit.HOURS.toMinutes(
                                 TimeUnit.MILLISECONDS.toHours(timeToFinished)),
@@ -122,6 +127,12 @@ public class ControlFragment extends Fragment {
 
         timer = new CountDownTimer(90000, 1000) {
             public void onTick(long timeToFinished) {
+                timeRemaining = timeToFinished;
+                if (timeToFinished < 10000) {
+                    timerView.setTextColor(getResources().getColor(R.color.red_color));
+                } else {
+                    timerView.setTextColor(getResources().getColor(R.color.white_color));
+                }
                 timerView.setText(""+String.format("%02d:%02d",
                     TimeUnit.MILLISECONDS.toMinutes(timeToFinished) - TimeUnit.HOURS.toMinutes(
                             TimeUnit.MILLISECONDS.toHours(timeToFinished)),
@@ -151,6 +162,16 @@ public class ControlFragment extends Fragment {
 
         timer = new CountDownTimer(timeRemaining, 1000) {
             public void onTick(long timeToFinished) {
+                timeRemaining = timeToFinished;
+
+                //change text to red when timer is less than seconds from finishing
+                if (timeToFinished < 10000) {
+                    timerView.setTextColor(getResources().getColor(R.color.red_color));
+                } else {
+                    timerView.setTextColor(getResources().getColor(R.color.white_color));
+                }
+
+                //update text with time remaining
                 timerView.setText(""+String.format("%02d:%02d",
                         TimeUnit.MILLISECONDS.toMinutes(timeToFinished) - TimeUnit.HOURS.toMinutes(
                                 TimeUnit.MILLISECONDS.toHours(timeToFinished)),
