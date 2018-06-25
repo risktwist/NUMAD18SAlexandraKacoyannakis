@@ -31,14 +31,15 @@ public class GameFragment extends Fragment {
     // Data structures go here...
     static private int mLargeIds[] = {R.id.large1, R.id.large2, R.id.large3,
             R.id.large4, R.id.large5, R.id.large6, R.id.large7, R.id.large8,
-            R.id.large9,};
+            R.id.large9, R.id.large10, R.id.large11,};
     static private int mSmallIds[] = {R.id.small1, R.id.small2, R.id.small3,
             R.id.small4, R.id.small5, R.id.small6, R.id.small7, R.id.small8,
             R.id.small9,};
 
+    private int numBoards = 9;
     private Tile mEntireBoard = new Tile(this);
-    private Tile mLargeTiles[] = new Tile[9];
-    private Tile mSmallTiles[][] = new Tile[9][9];
+    private Tile mLargeTiles[] = new Tile[numBoards];
+    private Tile mSmallTiles[][] = new Tile[numBoards][9];
     private Tile.Owner mPlayer = Tile.Owner.X;
     private int mLastLarge = -1;
     private int mLastSmall = -1;
@@ -52,6 +53,7 @@ public class GameFragment extends Fragment {
     private Vibrator vibrate;
     private int currentScore = 0; //keeps track of the current score
     private MediaPlayer matchSound;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -104,7 +106,7 @@ public class GameFragment extends Fragment {
 
     private void initViews(View rootView, ArrayList<String> wordsForBoard) {
         mEntireBoard.setView(rootView);
-        for (int large = 0; large < 9; large++) {
+        for (int large = 0; large < numBoards; large++) {
             View outer = rootView.findViewById(mLargeIds[large]);
             mLargeTiles[large].setView(outer);
 
@@ -176,18 +178,34 @@ public class GameFragment extends Fragment {
         setAvailableFromLastMove(small);
     }
 
+    /**
+     * restart the game
+     */
     public void restartGame() {
         initGame();
         initViews(getView(), words);
         updateAllTiles();
+    }
 
+    /**
+     * start phase 2: add 2 new boards
+     */
+    public void beginPhase2() {
+        numBoards = 11;
+        mLargeTiles = new Tile[numBoards];
+        mSmallTiles = new Tile[numBoards][9];
+        final View board10 = getView().findViewById(R.id.large10);
+        board10.setVisibility(View.VISIBLE);
+        final View board11 = getView().findViewById(R.id.large11);
+        board11.setVisibility(View.VISIBLE);
+        restartGame();
     }
 
     public void initGame() {
         Log.d("UT3", "init game");
         mEntireBoard = new Tile(this);
         // Create all the tiles
-        for (int large = 0; large < 9; large++) {
+        for (int large = 0; large < numBoards; large++) {
             mLargeTiles[large] = new Tile(this);
             for (int small = 0; small < 9; small++) {
                 mSmallTiles[large][small] = new Tile(this);
@@ -242,7 +260,7 @@ public class GameFragment extends Fragment {
 
     private void updateAllTiles() {
         mEntireBoard.updateDrawableState();
-        for (int large = 0; large < 9; large++) {
+        for (int large = 0; large < numBoards; large++) {
             mLargeTiles[large].updateDrawableState();
             for (int small = 0; small < 9; small++) {
                 mSmallTiles[large][small].updateDrawableState();
@@ -257,7 +275,7 @@ public class GameFragment extends Fragment {
         builder.append(',');
         builder.append(mLastSmall);
         builder.append(',');
-        for (int large = 0; large < 9; large++) {
+        for (int large = 0; large < numBoards; large++) {
             for (int small = 0; small < 9; small++) {
                 builder.append(mSmallTiles[large][small].getOwner().name());
                 builder.append(',');
@@ -272,7 +290,7 @@ public class GameFragment extends Fragment {
         int index = 0;
         mLastLarge = Integer.parseInt(fields[index++]);
         mLastSmall = Integer.parseInt(fields[index++]);
-        for (int large = 0; large < 9; large++) {
+        for (int large = 0; large < numBoards; large++) {
             for (int small = 0; small < 9; small++) {
                 Tile.Owner owner = Tile.Owner.valueOf(fields[index++]);
                 mSmallTiles[large][small].setOwner(owner);
