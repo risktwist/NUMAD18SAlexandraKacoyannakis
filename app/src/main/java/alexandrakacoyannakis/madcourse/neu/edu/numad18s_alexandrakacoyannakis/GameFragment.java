@@ -455,7 +455,6 @@ public class GameFragment extends Fragment {
         if (word != null) {
             if (correctWords.contains(word)) {
                 calculateScore(true, word);
-               // beep.startTone(ToneGenerator.TONE_SUP_CONFIRM,150);
                 matchSound.start();
                 ((GameActivity)getActivity()).updateScore(currentScore, word);
             } else {
