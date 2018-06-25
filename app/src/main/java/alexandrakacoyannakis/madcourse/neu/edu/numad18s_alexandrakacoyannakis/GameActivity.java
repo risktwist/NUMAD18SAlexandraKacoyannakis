@@ -146,4 +146,11 @@ public class GameActivity extends Activity {
         backgroundMusic = MediaPlayer.create(this, R.raw.background_music);
         backgroundMusic.start();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        backgroundMusic.stop();
+        backgroundMusic.release();
+    }
 }
