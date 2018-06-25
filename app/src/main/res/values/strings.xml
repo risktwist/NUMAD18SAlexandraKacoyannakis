@@ -42,6 +42,7 @@
     <string name="about_label">How to Play</string>
     <string name="new_game_label">New Game</string>
     <string name="correct_words">Correct Words: </string>
+    <string name="turn_off_music">Turn Off Music</string>
 
     <!-- Acknowledgements strings -->
     <string name="acknowledgement1">\"Clippity Clop\" by Eric Matyas from www.soundimage.org</string>

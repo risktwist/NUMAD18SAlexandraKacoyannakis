@@ -107,7 +107,7 @@
         android:orientation="horizontal"
         android:layout_row="3"
         android:layout_column="0"
-        android:layout_columnSpan="3"
+        android:layout_columnSpan="2"
         android:layout_gravity="center">
 
         <Button
@@ -115,6 +115,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/acknowledgements_button"/>
+
+        <Button
+            android:id="@+id/turn_off_music"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/turn_off_music"/>
 
     </LinearLayout>
 
