@@ -3,6 +3,7 @@ package alexandrakacoyannakis.madcourse.neu.edu.numad18s_alexandrakacoyannakis;
 import android.app.Fragment;
 import android.content.Context;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.ToneGenerator;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -50,12 +51,14 @@ public class GameFragment extends Fragment {
     private ToneGenerator beep;
     private Vibrator vibrate;
     private int currentScore = 0; //keeps track of the current score
+    private MediaPlayer matchSound;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         beep = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
         vibrate = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+        matchSound = MediaPlayer.create(getActivity(), R.raw.word_match);
         // Retain this fragment across configuration changes.
         setRetainInstance(true);
         initGame();
@@ -452,6 +455,8 @@ public class GameFragment extends Fragment {
         if (word != null) {
             if (correctWords.contains(word)) {
                 calculateScore(true, word);
+               // beep.startTone(ToneGenerator.TONE_SUP_CONFIRM,150);
+                matchSound.start();
                 ((GameActivity)getActivity()).updateScore(currentScore, word);
             } else {
                 calculateScore(false, word);
@@ -467,6 +472,9 @@ public class GameFragment extends Fragment {
         super.onDestroy();
         beep.release();
         vibrate.cancel();
+        matchSound.stop();
+        matchSound.reset();
+        matchSound.release();
     }
 
     /**
