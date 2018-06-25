@@ -174,11 +174,12 @@ public class ControlFragment extends Fragment {
         restart.setText(R.string.pause_label);
     }
 
-    public void updateScore(int score) {
+    public void updateScore(int score, String word) {
         final TextView scoreView = getView().findViewById(R.id.score);
         scoreView.setText(getString(R.string.score) + " " + score);
 
         final TextView wordsView = getView().findViewById(R.id.user_correct_words);
-        wordsView.setText(getString(R.string.correct_words));
+        String text = wordsView.getText().toString();
+        wordsView.setText(text + " " + word);
     }
 }

@@ -97,9 +97,8 @@ public class GameActivity extends Activity {
         dialog.show();
     }
 
-    public void updateScore(int score) {
-        finalScore = mGameFragment.getFinalScore();
-        controlFragment.updateScore(finalScore);
+    public void updateScore(int score, String word) {
+        controlFragment.updateScore(score, word);
     }
 
     @Override

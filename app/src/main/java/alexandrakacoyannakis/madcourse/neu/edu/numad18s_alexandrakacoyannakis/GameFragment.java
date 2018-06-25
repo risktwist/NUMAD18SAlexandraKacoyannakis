@@ -457,13 +457,12 @@ public class GameFragment extends Fragment {
         if (word != null) {
             if (correctWords.contains(word)) {
                 calculateScore(true, word);
+                ((GameActivity)getActivity()).updateScore(currentScore, word);
             } else {
                 calculateScore(false, word);
+                ((GameActivity)getActivity()).updateScore(currentScore, "");
             }
         }
-
-        //use activity to update the score
-        ((GameActivity)getActivity()).updateScore(currentScore);
     }
 
     @Override
