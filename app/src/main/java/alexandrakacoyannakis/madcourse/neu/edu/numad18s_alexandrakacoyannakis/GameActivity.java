@@ -131,6 +131,7 @@ public class GameActivity extends Activity {
         backgroundMusic.stop();
         backgroundMusic.reset();
         backgroundMusic.release();
+        getFragmentManager().beginTransaction().hide(mGameFragment).commit();
     }
 
     @Override
@@ -145,12 +146,12 @@ public class GameActivity extends Activity {
         controlFragment.updateRestartButton();
         backgroundMusic = MediaPlayer.create(this, R.raw.background_music);
         backgroundMusic.start();
+        getFragmentManager().beginTransaction().show(mGameFragment).commit();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        backgroundMusic.stop();
         backgroundMusic.release();
     }
 }
