@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 
 public class GameActivity extends Activity {
@@ -14,6 +16,7 @@ public class GameActivity extends Activity {
     private GameFragment mGameFragment;
     private ControlFragment controlFragment;
     private int finalScore = 0;
+    private MediaPlayer backgroundMusic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +26,9 @@ public class GameActivity extends Activity {
         mGameFragment = (GameFragment) getFragmentManager()
                 .findFragmentById(R.id.fragment_game);
         controlFragment = (ControlFragment) getFragmentManager().findFragmentById(R.id.fragment_game_controls);
+        backgroundMusic = MediaPlayer.create(this, R.raw.background_music);
+        backgroundMusic.setLooping(true);
+        backgroundMusic.start();
         boolean restore = getIntent().getBooleanExtra(KEY_RESTORE, false);
         if (restore) {
             String gameData = getPreferences(MODE_PRIVATE)
@@ -32,7 +38,7 @@ public class GameActivity extends Activity {
             }
             controlFragment.restartTimer();
         }
-        Log.d("UT3", "restore = " + restore);
+        Log.d("Scroggle", "restore = " + restore);
     }
 
     public void restartGame() {
@@ -111,6 +117,9 @@ public class GameActivity extends Activity {
         Log.d("UT3", "state = " + gameData);
         controlFragment.pauseTimer();
         controlFragment.updatePauseButton();
+        backgroundMusic.stop();
+        backgroundMusic.reset();
+        backgroundMusic.release();
     }
 
     @Override
@@ -123,5 +132,7 @@ public class GameActivity extends Activity {
         }
         controlFragment.restartTimer();
         controlFragment.updateRestartButton();
+        backgroundMusic = MediaPlayer.create(this, R.raw.background_music);
+        backgroundMusic.start();
     }
 }
