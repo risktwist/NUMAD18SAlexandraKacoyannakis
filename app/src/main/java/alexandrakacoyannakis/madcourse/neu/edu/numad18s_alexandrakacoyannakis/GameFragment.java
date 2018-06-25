@@ -88,21 +88,14 @@ public class GameFragment extends Fragment {
         LoadWordTask loadWords = new LoadWordTask();
 
         try{
-            words = loadWords.execute().get();
+            correctWords = loadWords.execute().get();
         } catch (InterruptedException e) {
             Log.e("error", e.getMessage());
         } catch (ExecutionException e) {
             Log.e("'error", e.getMessage());
         }
 
-        CheckWords checkWords = new CheckWords();
-        try{
-            correctWords = checkWords.execute().get();
-        } catch (InterruptedException e) {
-            Log.e("error", e.getMessage());
-        } catch (ExecutionException e) {
-            Log.e("'error", e.getMessage());
-        }
+        addNineLetterWords();
 
         initViews(rootView, words);
         updateAllTiles();
@@ -477,11 +470,21 @@ public class GameFragment extends Fragment {
     }
 
     /**
-     * Load Word Task is used to load the letters for the
-     * tiles on each of the 9 boards.
-     *
-     * It specifically looks for 9 letter words in the
-     * provided text file.
+     * add 9 letter words to the possible words
+     * that can be used for the board
+     */
+    private void addNineLetterWords() {
+        for (int i=0; i < correctWords.size(); i++) {
+            if (correctWords.get(i).length() == 9) {
+                words.add(correctWords.get(i));
+            }
+        }
+    }
+
+    /**
+     * LoadWordTask is an async task that loads all of the words provided by
+     * the text file. These words will then later be used to check against
+     * the user input from each board to see if the word is correct.
      */
     private class LoadWordTask extends AsyncTask<Void, Integer, ArrayList<String>> {
 
@@ -498,9 +501,7 @@ public class GameFragment extends Fragment {
 
                 //only add 9 character words for block
                 while ((line = reader.readLine()) != null) {
-                    if (line.length() == 9) {
-                        words.add(line);
-                    }
+                    words.add(line);
                 }
                 reader.close();
                 inputStream.close();
@@ -510,38 +511,4 @@ public class GameFragment extends Fragment {
             return words;
         }
     }
-
-    /**
-     * CheckWords is an async task that loads all of the words provided by
-     * the text file. These words will then later be used to check against
-     * the user input from each board to see if the word is correct.
-     */
-    private class CheckWords extends AsyncTask<Void, Integer, ArrayList<String>> {
-
-        InputStream inputStream = null;
-        BufferedReader reader = null;
-        ArrayList<String> words = new ArrayList<>(); //words from the text file
-
-        @Override
-        protected ArrayList<String> doInBackground(Void... params) {
-            try {
-                inputStream = getActivity().getAssets().open("wordlist.txt");
-                reader = new BufferedReader(new InputStreamReader(inputStream));
-                String line;
-
-                //only add 9 character words for block
-                while ((line = reader.readLine()) != null) {
-                    words.add(line);
-
-                }
-                reader.close();
-                inputStream.close();
-            } catch (IOException e) {
-                Log.e("message: ", e.getMessage());
-            }
-            return words;
-        }
-    }
-
-
 }
