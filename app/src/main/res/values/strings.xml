@@ -43,4 +43,9 @@
     <string name="new_game_label">New Game</string>
     <string name="correct_words">Correct Words: </string>
 
+    <!-- Acknowledgements strings -->
+    <string name="acknowledgement1">\"Clippity Clop\" by Eric Matyas from www.soundimage.org</string>
+    <string name="acknowledgement2">\"Glass Pinging\" by Go445 from http://soundbible.com/2084-Glass-Ping.html</string>
+    <string name="acknowledgement3">\Letter and menu icons from Icons8 https://icons8.com</string>
+
 </resources>

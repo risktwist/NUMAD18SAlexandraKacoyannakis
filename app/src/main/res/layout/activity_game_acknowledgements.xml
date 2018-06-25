@@ -1,9 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".GameAcknowledgements">
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/acknowledgement_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/acknowledgements_button"
+        android:textStyle="bold"
+        android:paddingBottom="@dimen/control_padding"/>
+
+    <TextView
+        android:id="@+id/acknowlegement1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/acknowledgement_header"
+        android:text="@string/acknowledgement1"
+        android:paddingBottom="@dimen/control_padding"/>
+
+    <TextView
+        android:id="@+id/acknowledgement2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/acknowlegement1"
+        android:text="@string/acknowledgement2"
+        android:paddingBottom="@dimen/control_padding"/>
+
+    <TextView
+        android:id="@+id/acknowledgement3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/acknowledgement2"
+        android:text="@string/acknowledgement3"
+        android:paddingBottom="@dimen/control_padding"/>
+</RelativeLayout>
