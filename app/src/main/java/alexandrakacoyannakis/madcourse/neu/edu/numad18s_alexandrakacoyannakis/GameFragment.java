@@ -39,8 +39,6 @@ public class GameFragment extends Fragment {
     private Tile mLargeTiles[] = new Tile[9];
     private Tile mSmallTiles[][] = new Tile[9][9];
     private Tile.Owner mPlayer = Tile.Owner.X;
-    private Tile currentTile = new Tile(this);
-    private Set<Tile> mAvailable = new HashSet<>();
     private int mLastLarge = -1;
     private int mLastSmall = -1;
     private ArrayList<String> words = new ArrayList<>();
@@ -64,12 +62,7 @@ public class GameFragment extends Fragment {
     }
 
     private void clearAvailable() {
-        mAvailable.clear();
         availableSquares.clear();
-    }
-
-    private void addAvailable(Tile tile) {
-        mAvailable.add(tile);
     }
 
     public boolean isAvailable(int dest) {
@@ -150,7 +143,6 @@ public class GameFragment extends Fragment {
                         //if tile previously selected, unselect it
                         if (smallTile.getIsSelected()) {
                             unselectTile(smallTile, fLarge, currentLetter);
-                            setAvailableFromLastMove(mLastSmall);
                             return;
                         }
 
@@ -183,7 +175,6 @@ public class GameFragment extends Fragment {
         Tile smallTile = mSmallTiles[large][small];
         smallTile.setOwner(mPlayer);
         smallTile.selectLetterTile();
-        currentTile = smallTile;
         appendLetterToWord(mLastLarge, letter);
         setAvailableFromLastMove(small);
     }
@@ -240,19 +231,15 @@ public class GameFragment extends Fragment {
             }
         }
         // If there were none available, make all squares available
-         else if (mAvailable.isEmpty()) {
+         else if (availableSquares.isEmpty()) {
             setAllAvailable();
         }
     }
 
     private void setAllAvailable() {
-        for (int large = 0; large < 9; large++) {
-            for (int small = 0; small < 9; small++) {
-                Tile tile = mSmallTiles[large][small];
-                if (tile.getOwner() == Tile.Owner.NEITHER)
-                    addAvailable(tile);
-                    addAvailableDest(small);
-            }
+        availableSquares.clear();
+        for (int small = 0; small < 9; small++) {
+            addAvailableDest(small);
         }
     }
 
@@ -441,12 +428,20 @@ public class GameFragment extends Fragment {
 
         String word = userWords.get(large);
         int last = word.length() - 1;
+        char newLastLetter = word.charAt(last);
 
         //unselect and remove letter only if last tile selected
-        if (Character.toString(word.charAt(last)).equals(currentLetter)) {
+        if (Character.toString(newLastLetter).equals(currentLetter)) {
             smallTile.unselectTile();
             word = word.substring(0, last);
             userWords.put(large, word);
+        }
+
+        //set all tiles to be available if the first character unselected
+        if (last == 0) {
+            setAllAvailable();
+        } else {
+            setAvailableFromLastMove(mLastSmall);
         }
 
     }
